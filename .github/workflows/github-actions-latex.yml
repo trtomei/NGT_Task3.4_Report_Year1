@@ -1,17 +1,66 @@
-name: Build LaTeX document
+name: Build LaTeX Document
+
 on: [push]
+
 jobs:
   build_latex:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the repository
       - name: Set up Git repository
         uses: actions/checkout@v3
-      - name: Compile LaTeX document
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: main.tex
+
+      # Step 2: Install TeX Live with biber
+      - name: Install TeX Live and biber
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-full biber
+
+      # Step 3: Compile LaTeX document with lualatex (first pass)
+      - name: Compile LaTeX document (first pass)
+        run: |
+          lualatex -interaction=nonstopmode -shell-escape main.tex
+
+      # Step 4: Run biber for bibliography
+      - name: Run biber for bibliography
+        run: biber main
+
+      # Step 5: Recompile LaTeX to resolve references
+      - name: Finalize LaTeX compilation
+        run: |
+          lualatex -interaction=nonstopmode -shell-escape main.tex
+          lualatex -interaction=nonstopmode -shell-escape main.tex
+
+      # Step 6: Upload the generated PDF as an artifact
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
           name: main
           path: main.pdf
+
+      # Step 7: Create a release and attach the compiled PDF
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided automatically by GitHub Actions
+        with:
+          tag_name: v${{ github.run_number }} # Use a simpler, unique tag name
+          release_name: Release ${{ github.run_number }} # Define a simpler release name
+          body: |
+            Release triggered by commit:
+            ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
+
+      # Step 8: Upload the PDF to the release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./main.pdf # Path to the PDF file
+          asset_name: main.pdf # Name of the uploaded asset
+          asset_content_type: application/pdf
