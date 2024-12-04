@@ -1,4 +1,5 @@
-\section{DAQ Integration} % Thiago
+%!TEX root = ../main.tex
+\section{NGT--DAQ Integration} % Thiago
 
 %%% We just write the discussion we had in the whole DAQ session
 
@@ -25,6 +26,88 @@ The DAQ3 was also designed with two characteristics that the demonstrator should
 i) it is \emph{pipelined}, so the data should follow an unidirectional flow;
 ii) it is \emph{democratic}, in the sense that all elements (RUs, BUs, FUs) are treated equally.
 
+The \textit{minimum minimorum} proposed demonstrater is the following:
 %%% Thiago testing the GitHub integration
 % I want to work at the LHC!
 % I want to work at the FCC!
+
+\subsection{Conceptual DAQ Design for Phase-2}
+
+\subsection{System Feasibility: Preliminary Calculation}
+
+As the overarching goal of the NGT project is to reconstruct and save all the L1-accepted data, 
+our first assumption is that the system will have to buffer all the data of a run whilst 
+running the optimal calibrations.
+The size of the data buffer $B$ can be estimated by the following formula
+\begin{equation}
+B = L1A \times \tau \times E \times s
+\label{eq:buffersize}
+\end{equation}
+where $L1A$ is the Level-1 trigger accept rate,
+$\tau$ is the period during which we have to buffer the data,
+$E$ is the event size and
+$s$ is a safety factor.
+For a first calculation, we take the Run 4 estimates from the DAQ-HLT TDR:
+-- $L1A$ = 500\kHz, $E$ = 6.1\,MB --
+and assume a flat 50\% safety factor ($s$ = 1.5).
+The discussion on the magnitude of the buffer period $\tau$ is more subtle and will be done in the next section.
+
+\subsubsection{Buffer period}
+
+The amount of time during which the data has to be buffered depends on many factors,
+and we add a set of working hypotheses to be able to bracket its value.
+\begin{itemize}
+\item The buffer period has to be longer than the amount of time needed to derive the calibrations.
+A relevant timescale is the PCL completion time, which we know from experience to take close to eight hours.
+We know from experience that the PCL takes, in average, 8 hours to run for completion.
+Some of the longest runs, however, may need additional time; a long run from LHC fill 10200 took data during more than 13 hours
+(delivering close to $900\pbinv$), and
+the PCL took more than 10 hours to finish,
+as seen in Fig.~\ref{fig:fill10200PCL}.
+Notice that, in offline reconstruction, Tier-0 starts the PCL only after the run end; 
+therefore the 48 hours limit for the start of prompt reconstruction applies to 
+the sum of run duration and the PCL duration.
+After the calibration is done the data has to be buffered for some more time in order to allow the NGT reconstruction to run.
+Therefore, we choose to use a representative value of \emph{12 hours}.
+\begin{figure}[htbp]
+   \centering
+	\includegraphics[width=0.7\textwidth]{figures/fill10200PCL.png}
+   \caption{PCL monitoring of the silicon strip bad components calibration for a run of LHC fill 10200 (the number 386604 refers to internal CMS bookkeeping).
+   The run took data over more than 13 hours, whilst the PCL ran for over 10 hours.}
+   \label{fig:fill10200PCL}
+\end{figure}
+\item On the other hand, the buffer has to be large enough to store all the data from an LHC fill, as per our first assumption,
+but that calculation has to take into account the LHC duty cycle, so we use the following working hypotheses:
+\begin{itemize}
+\item The High-Luminosity LHC will work in a $\sim70\%$ duty cycle, meaning that in a 24-hour period there will be 17 hours of stable beams and 7 hours of interfill (including injection and ramp).
+\item Levelling will once again be used to keep the effective luminosity at a given level.
+Following the Run 3 historic performance, we assume that the 17 hours of stable beams will be divided into 10 hours of levelling and 7 hours of lumi decay phase.
+\item Again following the Run 3 performance, we assume that the luminosity (as well as the pileup) in the decay phase will average out to $\sim80\%$ of levelled luminosity.
+\item We assume that the event size $E$ scales linearly with pileup.
+\item We assume that the Level-1 accept rate $L1A$ will be kept constant even during the decay phase. 
+\item The 7 hours of downtime are effectively free from the point of view of data buffering for NGT.
+\end{itemize}
+\end{itemize}
+
+By simply substituting $\tau$ = 12 hours in Eq.~\ref{eq:buffersize}, we arrive at a buffer size $B$ = 200 PB.
+The second calculation that accounts for the LHC duty cycle amounts to three applications of the same equation,
+and is summarised in Table~\ref{tab:bufferWithDutyCycle}. In that case, we arrive at a buffer size of $B$ = 258 PB for a 24 hour period.
+Noting that the two results agree within $\sim25\%$, and that many more assumptions go into the second calculation, for the purposes of this report we proceed with the 200 PB figure.
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[htbp]
+   \centering
+   %\topcaption{Table captions are better up top} % requires the topcapt package
+   \begin{tabular}{@{} lrrrrr @{}} % Column formatting, @{} suppresses leading/trailing space
+      \toprule
+		Phase & Duration (h) & L1A (kHz) & $E$ (MB) & Safety factor & Buffer (PB)\\
+      	\midrule
+		Levelling & 10 & 500 & 6.1 & 1.5 & 165 \\
+		Decay     &  7 & 500 & 4.9 & 1.5 &  93 \\
+		Interfill &  7 &  -- &  -- &  -- &   0 \\
+		\midrule
+\textbf{Total}    & 24 & N/A & N/A & N/A & 258\\ 
+      \bottomrule
+   \end{tabular}
+   \caption{Calculation for NGT buffer size account for LHC duty cycle.}
+   \label{tab:bufferWithDutyCycle}
+\end{table}
