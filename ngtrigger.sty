@@ -1,0 +1,74 @@
+% ngtrigger.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ngtrigger}[2024/06/12 Custom style for Next Generation Trigger project reports]
+
+% Package imports
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{etoolbox} % For conditionals and other macros
+
+% Title, Author, and Subtitle definitions
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\newcommand{\@subtitle}{}
+
+% Custom title page
+\newcommand{\maketitlepage}{
+  \begin{titlepage}
+    \begin{center}
+      \vspace*{1cm}
+      \includegraphics[height=2.5cm]{Logos/cern_logo.png}
+      \hfill
+      \includegraphics[height=2.5cm]{Logos/R-Cube_Logo_NoLabels.png}
+      \vspace{5cm}
+      
+      {\Huge \textbf{\@title}}
+      \vspace{1cm}
+      
+      \ifx\@subtitle\@empty
+      \else
+        {\Large \textbf{\@subtitle}}
+        \vspace{1cm}
+      \fi
+      \vspace{3cm}      
+      
+      {\large \textbf{Author:} \par \@author}
+      \vspace{1cm}
+      
+      {\large \textbf{Date:} \par \today}
+      
+      \vfill
+    \end{center}
+  \end{titlepage}
+}
+
+% Custom headers and footers
+\setlength{\headheight}{32.05278pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[height=1cm]{Logos/cern_logo.png}}
+\fancyhead[R]{\includegraphics[height=1cm]{Logos/R-Cube_Logo_NoLabels.png}}
+\fancyhead[C]{\nouppercase{\leftmark}}
+\fancyfoot[R]{\thepage}
+
+% Redefine chapter and section numbering
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+
+% Redefine section format to include in the header
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+
+\renewcommand{\sectionmark}[1]{%
+  \markboth{#1}{}}
+
+% Ensure first page of each chapter includes header
+\fancypagestyle{plain}{%
+  \fancyhead[L]{\includegraphics[height=1cm]{Logos/cern_logo.png}}
+  \fancyhead[R]{\includegraphics[height=1cm]{Logos/R-Cube_Logo_NoLabels.png}}
+  \fancyhead[C]{\nouppercase{\leftmark}}
+  \fancyfoot[R]{\thepage}
+}
+
+\endinput

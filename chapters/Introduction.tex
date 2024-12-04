@@ -1,0 +1,157 @@
+\chapter{Report's goals}
+
+\section{Introduction}
+
+\subsection{Calibrations General}
+%%% Some introductory text to explain the main concepts.
+
+\subsection{CMS Calibration Workflows}
+% TODO: General introduction
+
+% TODO: explain general AlCa: calibration vs condition, records, tags, etc.
+
+% Latest GTs:
+326 conditions (records/tags) in the latest HLT Global Tag (\texttt{140X\_dataRun3\_HLT\_v3}) used during LHC Run 3 p-p data taking in 2024.
+
+% NOTE: Introduce prompt/offline in a similar manner?
+
+\subsubsection{PCL}
+\subsubsection{O2O}
+\subsubsection{Other}
+
+%%% Here we should add something about the automation framework
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% The objective of \ngt{}'s \task{3.1.1} is to reconstruct all events received
+% from the L1T at a rate of \SI{750}{\kilo\hertz} during Run-\num{5} data taking,
+% eventually with an \emph{Offline-like} quality reconstruction. The
+% reconstruction should enable some ``quick and dirty'' analyses using the
+% reconstructed objects, without requiring additional steps. In order to
+% understand where we are in terms of computing and physics performance, we
+% decided to conduct a series of measurements using different scenarios, as
+% explined in \ref{sec:measurements}. Considering a
+% fixed budget for the farm in Run-\num{4} and Run-\num{5}, we need to determine
+% the speed-up factor needed to be able to process the whole L1TA input rate with
+% the required quality.
+% 
+% \section{Measurements}
+% \label{sec:measurements}
+% 
+% As part of the first-year milestones, \task{3.1.1} is responsible for
+% delivering a report on the performance of online reconstruction. This report
+% will address identified bottlenecks, propose targeted improvements, and outline
+% the necessary features for the generic CMS Structure of Arrays (\soa{}). To
+% achieve this, we have begun conducting measurements using recent \CMSSW*{}
+% releases. Our focus is on three specific performance metrics:
+% 
+% \begin{itemize}
+% \item
+%   \textbf{Measure the current performance of the \emph{simplified HLT Phase2
+%     menu} for HL-LHC}: This will evaluate the present performance in terms of
+%     computing speed and memory usage, with an aim to extrapolate these metrics
+%     to 2030, the expected start of HL-LHC operations, and further down to 2032,
+%     the beginning of Run-\num{5} operations. This will be done using both a
+%     sample of \emph{TTbar} simulated events from the \textbf{Spring24} ongoing
+%     campaign under 200PU conditions (and 140PU, if available), and a
+%     specifically created \textit{skim} of L1 accepted events over an input
+%     sample of \textit{MinimumBias} events, at 200PU.
+% \item
+%   \textbf{Assess the current performance of the \emph{offline Phase2
+%     reconstruction}}: This will be done using both a sample of \emph{TTbar}
+%     simulated events from the \textbf{Spring24} ongoing campaign under 200PU
+%     conditions (and 140PU, if available), and a specifically created
+%     \textit{skim} of L1 accepted events over an input sample of
+%     \textit{MinimumBias} events, at 200PU. We will then project this
+%     performance to 203{0,2}, considering anticipated improvements in CHF/HS06
+%     and the likely shift of some algorithms and reconstruction processes to
+%     accelerators. This analysis will help identify the necessary speedup factor
+%     required to handle the full L1A rate directly during HLT processing using
+%     an \textbf{offline-like reconstruction}, which is the final goal of this
+%     task.
+% \item
+%   \textbf{Account for ongoing development in the \emph{offline Phase2
+%   reconstruction}}: Since it is still evolving and lacks some
+%   improvements present in the \emph{Run-3 reconstruction}, we also plan
+%   to measure the performance of the \emph{Run-3 reconstruction} on a
+%     simulated \textit{TTbar} sample with roughly 60PU. We will then identify which
+%   modules from the \emph{Run-3 scenario} are missing in the
+%   \emph{offline Phase2} sequence, estimate their
+%   significance---particularly regarding CPU usage---extrapolate this
+%   data to 200PU conditions, and incorporate it into our previous
+%   performance measurements.
+% \end{itemize}
+% 
+% All measurements have been done using \CMSSW[14][2][0][1]{}. A few additional patches have been necessary in order to correctly re-process the events. The patches fixed genuine bugs in the Phase\num{2} HLT Menu that were discovered while performing these measurements. Those patches have been submitted upstream to the main \CMSSW*{} release as pull requests (\href{https://github.com/cms-sw/cmssw/pull/46019}{46019} and \href{https://github.com/cms-sw/cmssw/pull/46054}{46054}) and integrated.
+% 
+% All samples used have been specifically produced to optimize the performance of the Phase\num{2} HLT reconstruction and of the offline reconstruction. Detailed instructions on how to create the samples and about their specificities are avaialble at \href{https://cms-ngt-hlt.docs.cern.ch/Task311/2024/Recipes/}{this link}\cite{ngt-recipes}.
+% 
+% Once all measurements are completed and the data is available, we will
+% be in a better position to propose the next steps for development.
+% Specifically, we will understand the extent of \textit{disruption} required to
+% meet the highly ambitious goals outlined in this task.
+% 
+% \subsection{Pie resources}
+% \label{subsec:pie-resources}
+% 
+% All pie-chart resources are usually available at
+% \href{https://rovere.web.cern.ch/rovere/Phase2_HLT/circles/web/piechart.php}{this
+% link}\cite{ngt-pies}. The measurements that are related to the \ngt{} project are
+% usually collected under the \texttt{NGT\_\-Mea\-sure\-ments} folder.
+% 
+% \begin{nbbox}
+% Some of the measurements collected at the link above are the results of several
+% trials and errors. The measurements that are meant to be representative of each
+% specific condition will be linked in the proper sections.
+% \end{nbbox}

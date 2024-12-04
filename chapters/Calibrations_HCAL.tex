@@ -1,0 +1,33 @@
+\subsection{HCAL Calibrations}
+
+Out of the 326 conditions in the HLT GT, 37 are related to HCAL, of which 24 are relevant to Run 3 data-taking. From these, the following 9 are considered core and critical for data-taking:
+
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{p{3.5cm}|p{4cm}|p{2.5cm}|p{2cm}|p{4.5cm}}
+        \textbf{Name} & \textbf{Record} & \textbf{Workflow} & \textbf{Frequency of Updates} & \textbf{Description} \\ \hline
+        Gains (RadDam) & \texttt{HcalGains} & O2O & Weekly & Response corrections for radiation damage (RadDam). \\
+         Pedestals & \texttt{HcalPedestals} & HCAL automation (O2O) & Weekly & Pedestals for noise measurements.
+measurements.\\
+        Pedestal Widths & \texttt{HcalPedestalWidths} & HCAL automation (O2O) & Weekly & Pedestals for noise measurements.
+measurements. \\
+        L1T Trigger Objects & \texttt{HcalL1TriggerObjects} & HCAL automation (O2O) & Weekly & L1T trigger objects, including relevant conditions: pedestals, gains and response corrections, channel quality. \\
+        Response Corrections & \texttt{HcalRespCorrs} & O2O & per Era ($\approx 20~\fbinv$) & Corrections to detector energy response. \\
+        Channel Quality & \texttt{HcalChannelQuality} & O2O & Few times per year & Tracking dead or non-functional HCAL cells. \\
+        Geometry Parameters & \texttt{HcalParameters} & Manual & Yearly & Parameters related to the HCAL geometry. \\
+        Look-Up Tables (LUTs) & \texttt{HcalLUTCorrs} & O2O & Rarely & Corrections related to Look-Up Tables (LUTs). \\
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Fundamental HCAL Calibrations, ordered in terms of frequency of updates.}
+    \label{tab:HCALCalibrations_critical}
+\end{table}
+
+In the context of an optimal calibrations workflow, the first 6 from Table \ref{tab:HCALCalibrations_critical} are considered fundamental\footnote{There exist fundamental HCAL conditions that can have a significant effect on HLT reconstruction which are implemented in the hardware directly (e.g. timing alignment, zero-suppression thresholds (\texttt{HcalZSThresholds}) and their conditions database records (assuming they exist) may not be considered critical (but e.g. used for bookkeeping purposes).} and generally require more frequent updates. These have been analyzed in more detail in the following sections.
+
+\subsubsection{Response Corrections}
+\subsubsection{Gains (RadDam)}
+\subsubsection{Pedestals}
+\subsubsection{Others}
+
+% NOTE: more complete list in annex? e.g. non-critical calibrations

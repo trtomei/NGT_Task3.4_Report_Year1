@@ -1,0 +1,33 @@
+\chapter{Optimal Calibrations}
+\section{General} % FIXME: the sections structure should be re-arranged/intergrated into the main general structure (the Introduction.tex part was untouched)
+
+%% General
+% From NGT Proposal: 
+% This task will optimize the calibration process for the CMS detectors, from hours currently, to an online predictive model leveraging AI techniques. Such an improvement is essential to push real-time analysis based on R3 software (task 3.1) to the same accuracy that we typically achieve offline. One could then store high-quality high-level information, which implies a big save in terms of storage.
+
+% Deliverable/milestone: Production of a report illustrating the current calibration workflows in CMS and evaluating the impact of non-optimal calibrations on the physics performance of the online reconstruction.
+
+\begin{figure}[h!]	
+\centering
+\includesvg[width=\textwidth]{figures/NGT-HLT_Calibration_Workflow} %\hfill
+\caption{NGT-HLT Calibration Workflow}
+\label{fig:NGT-HLT_CalibrationWorkflow}
+\end{figure}
+
+\section{Calibration Workflows Analysis}
+% Conduct a comprehensive analysis of the current calibration workflows and procedures within CMS currently in place, understanding the intricacies of the process, and identify areas for improvement (bottlenecks) in the calibration process. 
+
+% NOTE: The current preliminary survey focused on finding viable candidates for the prototype. A continued and more detailed follow-up survey is being planned, especially in the context of Phase 2 calibrations, including new detectors (MTD, HGCAL, new tracker, etc.)
+
+%\include{chapters/Calibrations_General}
+\include{chapters/Calibrations_Pixel} % Marco
+\include{chapters/Calibrations_Strips} % Marco
+%\include{chapters/Calibrations_ECAL} % Thiago
+\include{chapters/Calibrations_HCAL} % Mateusz
+%\include{chapters/Calibrations_Muons} % Thiago
+
+\section{Physics Performance}
+
+%%% Here we discuss the 
+%% Physics performance
+% Assessment on the impact of non-optimal calibrations on the physics performance of the online reconstruction, by analysing data to quantify the effects of calibration inaccuracies.

@@ -1,0 +1,39 @@
+\newcommand{\ngt}{\textsf{NGT}}
+\newcommand{\task}[1]{\textsf{Task #1}}
+\newcommand{\soa}{\textsf{SoA}}
+\newcommand{\hltp}{\texttt{HLT Phase\num{2}}}
+\newcommand{\offp}{\texttt{Offline Phase\num{2}}}
+\newcommand{\run}[1]{Run-\num{#1}}
+\newcommand{\hs}[1]{\texttt{HS#1}}
+\newcommand{\Lone}{Level-\num{1}}
+\NewDocumentCommand {\CMSSW} { s O{X} O{X} O{X} o} {%
+  \IfBooleanTF {#1}
+  {%
+    \textsc{CMSSW}%
+  }%
+  {
+    \IfNoValueTF {#5}
+    {%
+      \textsc{CMSSW}\_{#2}\_{#3}\_{#4}%
+    }%
+    {
+      \textsc{CMSSW}\_{#2}\_{#3}\_{#4}\_pre{#5}%
+    }%
+  }%
+}%
+
+% Define a colorbox for a NotaBene clarification
+\newtcolorbox{nbbox}{%
+  colback=yellow!10!white,
+  colframe=yellow!80!black,
+  fonttitle=\sffamily\bfseries,
+  title=Nota Bene}
+ 
+% Define a colorbox for an Alert clarification
+\newtcolorbox{alertbox}{%
+  colback=scarletred1!10!white,
+  colframe=scarletred3!80!black,
+  fonttitle=\sffamily\bfseries,
+  title=Alert}
+
+

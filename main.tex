@@ -1,0 +1,93 @@
+\documentclass[10pt]{report}
+\usepackage[table]{xcolor}    % loads also »colortbl«. MUST BE LOADED FIRST
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[english]{babel}
+\usepackage{ngtrigger}
+\usepackage{lipsum} % For dummy text
+\usepackage[
+backend=biber,
+style=numeric,
+sorting=ynt
+]{biblatex}
+\usepackage{hyperref}                % For clickable hyperlinks
+\usepackage{siunitx}
+\usepackage{href-ul}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{booktabs}  % For \toprule, \midrule, \bottomrule
+\usepackage{array}     % For defining custom column types
+\usepackage{multirow}  % For spanning multiple rows and cols
+\usepackage{svg}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+
+\setcounter{tocdepth}{3}  % Include subsubsections in the TOC
+
+\usepackage{listings}
+\usepackage{xcolor}  % For syntax highlighting colors (optional)
+
+% Custom symbols
+\newcommand{\fbinv}{\ensuremath{\mathrm{fb}^{-1}}}
+
+% Custom configuration for code appearance
+\lstset{
+    basicstyle=\ttfamily\footnotesize,  % Basic font settings
+    keywordstyle=\color{blue},          % Keyword color
+    commentstyle=\color{green!60!black},% Comment color
+    stringstyle=\color{red},            % String color
+    numbers=left,                       % Line numbers on the left
+    numberstyle=\tiny\color{gray},      % Line number font and color
+    stepnumber=1,                       % Number every line
+    tabsize=4,                          % Tab spaces
+    breaklines=true,                    % Break long lines
+    frame=single,                       % Draw a frame around the code
+}
+
+% Define a new column type for \texttt (monospaced font)
+\newcolumntype{T}{>{\ttfamily}l}  % "T" is the new column type, "l" for left alignment
+% Define a new column type for \texttt (monospaced font) that uses 60% of the available space
+\newcolumntype{Z}{>{\ttfamily\raggedright\hspace{0pt}}p{0.6\textwidth}}
+
+% Prepare content for the title page
+\author{Marco Musich, Jessica Prendi, Thiago Tomei, Mateusz Zarucki}
+\title{Optimal HLT Calibrations}
+\subtitle{NGT Task 3.4 2024 Report}
+
+% Start chapter from 1
+\setcounter{chapter}{0}
+% Start section from 1
+\setcounter{section}{0}
+
+\addbibresource{references.bib}      % Reference your .bib file
+
+% Declate new siunitx
+\DeclareSIUnit{\event}{ev}
+\DeclareSIUnit{\CHF}{CHF}
+\DeclareSIUnit{\HS}{HS23}
+
+\begin{document}
+
+% Load colors from Tang palette, among many others.
+\input{colors}
+
+% Set alternating color for rows in tables
+\rowcolors*[]{2}{aluminium1!50!white}{white}
+%
+%% Add newly defined newly defined commands.
+\input{new_commands}
+
+% Create the title page
+\maketitlepage
+
+\tableofcontents
+\newpage
+
+\input{chapters/Introduction}
+\input{chapters/Calibrations}
+\input{chapters/DAQIntegration}
+\input{chapters/Conclusions}
+
+\printbibliography % Print the bibliography
+
+\end{document}
