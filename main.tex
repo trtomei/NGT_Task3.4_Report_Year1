@@ -5,11 +5,12 @@
 \usepackage[english]{babel}
 \usepackage{ngtrigger}
 \usepackage{lipsum} % For dummy text
-\usepackage[
-backend=biber,
-style=numeric,
-sorting=ynt
-]{biblatex}
+% Thiago doesn't know how to use biber, we revert back to bibtex
+%\usepackage[
+%backend=biber,
+%style=numeric,
+%sorting=ynt
+%]{biblatex}
 \usepackage{hyperref}                % For clickable hyperlinks
 \usepackage{siunitx}
 \usepackage{href-ul}
@@ -21,6 +22,7 @@ sorting=ynt
 \usepackage{svg}
 \usepackage{graphicx}
 \usepackage{adjustbox}
+\usepackage{xspace}
 
 \setcounter{tocdepth}{3}  % Include subsubsections in the TOC
 
@@ -28,9 +30,8 @@ sorting=ynt
 \usepackage{xcolor}  % For syntax highlighting colors (optional)
 
 % Custom symbols
-\newcommand{\pbinv}{\ensuremath{\mathrm{pb}^{-1}}}
-\newcommand{\fbinv}{\ensuremath{\mathrm{fb}^{-1}}}
-\newcommand{\kHz}{\ensuremath{\,\mathrm{kHz}}}
+%% Add newly defined newly defined commands.
+\input{new_commands}
 
 % Custom configuration for code appearance
 \lstset{
@@ -61,7 +62,7 @@ sorting=ynt
 % Start section from 1
 \setcounter{section}{0}
 
-\addbibresource{references.bib}      % Reference your .bib file
+%\addbibresource{references.bib}      % Reference your .bib file
 
 % Declate new siunitx
 \DeclareSIUnit{\event}{ev}
@@ -75,9 +76,6 @@ sorting=ynt
 
 % Set alternating color for rows in tables
 \rowcolors*[]{2}{aluminium1!50!white}{white}
-%
-%% Add newly defined newly defined commands.
-\input{new_commands}
 
 % Create the title page
 \maketitlepage
@@ -90,6 +88,8 @@ sorting=ynt
 \input{chapters/DAQIntegration}
 \input{chapters/Conclusions}
 
-\printbibliography % Print the bibliography
+%\printbibliography % Print the bibliography
+\bibliography{references}
+\bibliographystyle{lucas_unsrt}
 
 \end{document}
