@@ -1,16 +1,20 @@
 \chapter{Report's goals}
 
 \section{Introduction}
-At the CMS detector, approximately 1.6 terabits per second of data is generated (cite for number). It is, however, neither feasible nor practical to read out all the events. To overcome this, the CMS data acquisition system utilises a two level trigger system to reduce the data throughput: the Level-1 Trigger (L1T) and the High-Level Trigger (HT). For the expected High-Luminosity LHC (HL-LHC) upgrade, changes to the trigger system are anticipated (CMS-TDR-021 and CMS-TDR-022, to be properly cited) to handle the new experimental conditions, which result in higher pile-up (PU) and increased data complexity (PU cite). 
+At the CMS detector, approximately 1.6 terabits per second of data is generated (cite for number). It is, however, neither feasible nor practical to read out all the events. To overcome this, the CMS data acquisition system runs a two level trigger system to reduce the data throughput: the Level-1 Trigger (L1T) and the High-Level Trigger (HLT). For the expected High-Luminosity LHC (HL-LHC) upgrade, changes to the trigger system are anticipated (CMS-TDR-021 and CMS-TDR-022, to be properly cited) to handle the new experimental conditions, which result in higher pile-up (PU) and increased data complexity (PU cite). 
 \newline \newline 
-The current offline reconstruction quality and quantity at CMS encounters two main constraints at the HLT, namely its processing and storage capacity. Once an event is accepted by both the L1T and HLT, it is processed on the HLT farm. The online reconstruct there can only run on a fraction of the events at the time. The output rate is furthermore limited by the offline computing infrastructure. Both these constraints impose substantial restrictions on the number of events that can ultimately be processed and stored for offline physics analysis. As there has been no statistically significant new physics discovery in high energy physics since the measurement of the Higgs (cite 2012 paper..) (exclusion plots), it is crucial to rethink the data acquisition strategy. The Nest Generation Trigger (NGT) project at CMS aims to supplement the planned upgrades, further enhancing the physics potential of CMS during the high-luminosity era. The overarching goal is being able to fully reconstructed a larger data rate in real-time.
+The main constraint to the current offline reconstruction quality and quantity at CMS is encountered in form of the processing capacity of Tier-0. Once an event is accepted by both L1T and HLT, it is processed and fully reconstructed at Tier-0. The output rate is furthermore limited by the output bandwidth. These constraints impose substantial restrictions on the number of events that can ultimately be processed and stored for offline physics analysis. The consequences of this is that certain phase space regions remain unexplored by the CMS collaboration (exclusion plots). It is thus crucial to rethink our data acquisition strategy, which in turn will aid in future new physics searches. The Nest Generation Trigger (NGT) project at CMS aims to supplement the planned upgrades, further enhancing the physics potential of CMS during the high-luminosity era. The overarching goal is being able to fully reconstruct a larger data rate in real-time.
 \newline \newline
-To achieve this goal, a novel calibration workflow is needed, which the 3.4 Optimal Calibration task is dedicated to. The main objective of this task is to design a fast calibration workflow that meets or exceeds the resolution the HLT farm provides in the offline reconstruction, while automating and optimising the calibration processes. This will also introduce data buffering at the HLT and a prototype of this workflow is planned to be deployed within a year. As a first step, task members acquainted themselves with the existing calibration workflows and selected ideal candidates for the prototype, thanks to an collaboration-internal survey. In this report, we will present the current calibration workflow(s) at CMS, discuss the identified candidates and finally provide a conclusion and outlook from the first year of the 3.4 Optimal Calibration Task.
+To achieve this goal, a novel calibration workflow is needed, which the 3.4 Optimal Calibration task is dedicated to. The main objective of this task is to design a fast calibration workflow that meets or exceeds the resolution Tier-0 provides in the offline reconstruction, while automating and optimizing the calibration processes. This will also introduce data buffering at the HLT and a prototype of this workflow is planned to be deployed within a year. As a first step, task members acquainted themselves with the existing calibration workflows and selected ideal candidates for the prototype, thanks to an collaboration-internal survey. In this report, we will present the current calibration workflow(s) at CMS, discuss the identified candidates and integration of our workflow into the DAQ system and finally provide a conclusion and outlook from the first year of the 3.4 Optimal Calibration Task.
 
-\subsection{Calibrations General}
+
+\section{CMS Calibration Workflows}
+
+
+
 %%% Some introductory text to explain the main concepts.
 
-\subsection{CMS Calibration Workflows}
+
 % TODO: General introduction
 
 % TODO: explain general AlCa: calibration vs condition, records, tags, etc.
@@ -20,7 +24,7 @@ To achieve this goal, a novel calibration workflow is needed, which the 3.4 Opti
 
 % NOTE: Introduce prompt/offline in a similar manner?
 
-\subsubsection{PCL}
+\subsection{PCL}
 
 \begin{figure}[h!]	
 \centering
@@ -29,8 +33,8 @@ To achieve this goal, a novel calibration workflow is needed, which the 3.4 Opti
 \label{fig:PCL}
 \end{figure}
 
-\subsubsection{O2O}
-\subsubsection{Other}
+\subsection{O2O}
+\subsection{Other}
 
 %%% Here we should add something about the automation framework
 
