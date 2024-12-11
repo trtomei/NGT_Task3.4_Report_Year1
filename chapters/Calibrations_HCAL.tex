@@ -1,6 +1,8 @@
 \subsection{HCAL Calibrations}
 
-Out of the 326 conditions in the HLT GT, 37 are related to HCAL, of which 24 are relevant to Run 3 data-taking. From these, the following 9 are considered core and critical for data-taking:
+The calibration of the hadron calorimeter\footnote{Details of the detector are presented in \ref{CMS}} (HCAL) is vital in the determination of the energy scale and resolution of hadrons, and consequently jets and missing transverse momentum.
+
+There are no HCAL calibrations included in the PCL, however, there exist HCAL automation workflows that update HCAL conditions on a weekly basis (e.g. gains, pedestals). Most conditions are explicitly baked into the Look-Up Tables (LUTs) that are loaded on-detector and append the GT via the O2O procedure semi-automatically. The remaining conditions are uploaded manually to the conditions database. Many HCAL conditions are also relevant for L1T and the corresponding trigger primitives. Out of the 326 conditions in the HLT GT, 37 are related to HCAL, of which 24 are relevant to Run 3 data-taking. From these, the following 9 are considered core and critical for data-taking:
 
 \begin{table}[h!]
     \centering
@@ -23,9 +25,37 @@ measurements. \\
     \label{tab:HCALCalibrations_critical}
 \end{table}
 
-In the context of an optimal calibrations workflow, the first 6 from Table \ref{tab:HCALCalibrations_critical} are considered fundamental\footnote{There exist fundamental HCAL conditions that can have a significant effect on HLT reconstruction which are implemented in the hardware directly (e.g. timing alignment, zero-suppression thresholds (\texttt{HcalZSThresholds}) and their conditions database records (assuming they exist) may not be considered critical (but e.g. used for bookkeeping purposes).} and generally require more frequent updates. These have been analyzed in more detail in the following sections.
+In the context of an optimal calibrations workflow, the first 6 from Table \ref{tab:HCALCalibrations_critical} are considered fundamental\footnote{There exist fundamental HCAL conditions or calibrations which can have a significant effect on HLT reconstruction that are implemented in the hardware directly (e.g. timing alignment, zero-suppression thresholds, \texttt{HcalZSThresholds}) while their conditions database records may not be considered critical per se (but rather used for bookkeeping purposes).} and generally require more frequent updates. These have been analyzed in more detail in the following sections.
 
 \subsubsection{Response Corrections}
+Response corrections are calibrations that aim to equalize the signal coming from the detector to provide a uniform energy measurement. They have a very significant effect on HLT reconstruction and rates, and thus are considered critical. Generally, they are updated roughly every era ($\approx 20-30 \fbinv$), however, the exact frequency depends on the HCAL subsystem and type of correction. Technically-speaking, if the calibrations are determined accurately, they would require less-frequent updates (modulo hardware changes). The updates are explicitly baked into the LUTs that are loaded on-detector and the corresponding conditions appended to HLT GT via the O2O procedure semi-automatically.
+
+% HB and HE
+The main calibrations for the HB and HE come in in two forms: azimuthal ($\phi$\texttt{-symmetry}) and isolated track (\texttt{IsoTrack}) corrections, which are multiplicative factors. 
+
+% Azimuthal (Phi-)Symmetry
+Asymmetries in the response over $\phi$ arise due to structure, materials, inhomogeneous magnetic field, beam-spot shifts, and miscalibrations. The $\phi$\texttt{-symmetry} intercalibrations equalize the detector response in $\phi$ for each $i\eta$ ring and depth section of the HCAL. They take advantage of the uniformity of particle energies across the azimuthal angle $\phi$. An intercalibration is performed between calorimeter channels by comparing it to the average collected energy in the entire $i\eta$ ring. Two methods are used to determine them, depending on the hadron energies:
+\begin{itemize}
+    \item For high energies ($> 4 \GeV$) an iterative method is used, where scale factors for uncalibrated energies are determined iteratively by equalizing the mean of the energies in an energy interval. An unbiased dataset is used with events triggered by detectors other than HCAL, such as electron, photon and muon triggers. The reconstructed energies are obtained from zero-suppressed events after noise (pedestal) subtraction.
+    \item For low energies ($< 4 \GeV$; down to a fraction of a GeV), a method of moments is used, where the first (mean) and second (variance) moments of the energy distribution are compared to that of the entire $i\eta$ ring. This method uses minimum-bias events taken without zero-suppression (NZS). The noise (pedestal) is subtracted from the energy distribution.
+\end{itemize}
+
+The uncertainty-weighted average of the scale factors from both methods is used as the final scale factor for the $\phi$-intercalibration.
+
+% Isolated Track (IsoTrack)
+An absolute calibration of charged hadrons is performed by comparing the energy measurement with that of the tracker system, taking advantage of the precise calibration of the tracker system. Unlike the tracker momentum measurement, the HCAL energy response is non-linear, especially at lower energies. Therefore, the goal of the calibration is to equalize the relative energy scale for higher momentum charged hadrons that do not interact hadronically with the ECAL. Isolated tracks of hadrons with momenta between $40-60 \GeV$ are used. Data samples are collected using dedicated \texttt{IsoTrack} triggers with special isolation and maximum requirements on the energy deposited in the ECAL, as well as a more standard set of physics triggers with similar selections applied offline. They are determined in a depth-dependent way, which is more optimal.
+
+% HF
+The forward calorimeter (HF) is also calibrated using the $\phi$-symmetry, while the energy scale is extrapolated using $Z \rightarrow ee$ events. The dataset consists of events with one electron candidate in the HF and the other in the ECAL, which has been precisely calibrated. The scale is adjusted so that the dielectron invariant mass corresponding to the Z-peak is consistent between data and simulation.
+
+% HO, ZDC
+For HO, the intercalibration makes use of muons from collision data, as well as cosmic ray muons, while the determination of the absolute energy scale makes use of di-jet events. These calibrations are mostly unchanged with respect to initial calibrations.
+
+The Zero-Degree Calorimeter (ZDC) calibrations are also mostly unchanged and are not discussed here further. 
+
+% NGT candidate assessment
+In the context of a potential candidate for the optimal NGT calibrations, it is clear that the response corrections involve a number of dedicated separate offline analyses for different HCAL subsystems, using various input datasets (incl. \texttt{AlCaRecos}) and specific selections. Thus, their determination is rather convoluted and they are tricky to do without proper offline analysis and corresponding validation. Even though some of the sub-calibrations might be reasonably possible to automate (e.g. $Z \rightarrow ee$ for HF), it would still require significant work to automate. Furthermore, since they are baked into the LUTs, they are entangled together with L1T condition updates. Therefore, one can conclude that the response corrections are not a viable candidate for the NGT workflow in their current form, especially for the Run 3 prototype.
+
 \subsubsection{Gains (RadDam)}
 \subsubsection{Pedestals}
 \subsubsection{Others}
