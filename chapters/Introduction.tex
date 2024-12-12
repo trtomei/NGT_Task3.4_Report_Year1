@@ -33,6 +33,27 @@ The physics stream then performs the prompt reconstruction, where it uses the co
 \label{fig:PCL}
 \end{figure}
 
+\section{The CMS Conditions Database}
+
+The CMS condition database (\texttt{CondDB}) is a specialized database system used to store and manage the non event data required for detector operations, simulation, and data analysis.
+With conditions data we mean non-event data resulting mainly from calibrations and alignment algorithms.
+
+\subsection{Structure of the Conditions Data Model}
+
+The condition data is stored in \emph{payloads} and described with additional metadata information, such as the \emph{Interval of
+Validity} (IOV). It is organized into \emph{Tags} and \emph{Global Tags}.
+\begin{itemize}
+\item The "atom” of conditions data is the \emph{Payload}, representing the set of parameters consumed in the workflows of the physics data processing. It Associated to a user-defined C++ class in CMSSW (\texttt{CondFormats} objects)
+\item The time information for the validity of the \emph{Payloads} is specified with a parameter called \emph{Interval Of Validity} (IOV). Time is represented by a Run number, luminosity section id, or an universal timestamp.
+
+\item A \emph{Tag} is a fully qualified set of conditions consisting of
+Payloads and their associate IOVs. They should cover the time span required by the workload. 
+\item In \texttt{cmssw}, a special C++ class (the \emph{Record}) acts as entry point for a Payload by importing database content on the \texttt{cmsRun} executable. Every processing workflow consumes a specific set of Records
+\item A \emph{Global Tag} is a set of (\emph{Record}, \emph{Tag}) pairs needed by a particular processing workflow (online data-taking, MC,
+re-processing). This is the final "product", typically consumed by
+CMS users.
+\end{itemize}
+
 %\subsection{O2O}
 %\subsection{Other}
 
