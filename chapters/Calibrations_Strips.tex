@@ -1,13 +1,33 @@
 \subsection{Strip Tracker Calibrations}
 
-The CMS SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process. The calibration of its parameters, particularly for tracking and reconstruction, is vital for maintaining performance and ensuring robust data acquisition. This document summarizes the key prospects and current practices for optimizing SiStrip calibrations at HLT.\\
-Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tracker, of which 21 are relevant to Run 3 data-taking. From these, the following 4 are considered core and critical for data-taking:
+The CMS SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process.\\
+ The calibration of its parameters, particularly for tracking and reconstruction, is vital for maintaining performance and ensuring robust data acquisition. This section summarizes the key prospects and current practices for optimizing SiStrip calibrations at HLT.\newline \newline
+Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tracker, of which 21 are relevant to Run 3 data-taking. From these, 4 are considered core and critical for data-taking:
 
 \begin{table}[h!]
     \centering
     \begin{adjustbox}{max width=\textwidth}
-    \begin{tabular}{p{3.5cm}|p{4cm}|p{2.5cm}|p{2cm}|p{4.5cm}}
+    \begin{tabular}{p{3.4cm}|p{4.6cm}|p{2.5cm}|p{2.5cm}|p{3.5cm}}
         \textbf{Name} & \textbf{Record} & \textbf{Workflow} & \textbf{Frequency of Updates} & \textbf{Description} \\ \hline
+      Particle Gain              & \texttt{SiStripApvGain2Rcd}             &   PCL + MRH, manual upload              & Every couple of weeks/couple of months  & Per APV cluster charge calibration  \\ \hline
+      Tickmark Gain              & \texttt{SiStripApvGainRcd}              &   O2O                                   & Every couple of weeks/month             & Per APV cluster charge calibration  \\ \hline
+      FED cabling                & \texttt{SiStripFedCablingRcd}           &   O2O                                   & Every couple of weeks/month             & Readout to Detector ID mapping  \\ \hline
+      Latency                    & \texttt{SiStripLatencyRcd}              &   O2O                                   & Every couple of weeks/month             & Readout algorithm type  \\ \hline     
+      Noises                     & \texttt{SiStripNoisesRcd}               &   O2O                                   & Every couple of weeks/month             & Per strip noise  \\ \hline
+      Pedestals                  & \texttt{SiStripPedestalsRcd}            &   O2O                                   & Every couple of weeks/month             & Per strip pedestals  \\ \hline
+      FED thresholds             & \texttt{SiStripThresholdRcd}            &   O2O                                   & Every couple of weeks/month             & FED cluster finding thresholds  \\ \hline
+      Online Bad Strips          & \texttt{SiStripBadStripRcd}             &   O2O                                   & no update                               & Dead strips  \\ \hline  
+      Online Bad Modules         & \texttt{SiStripBadModuleRcd}            &   Manual                                & Might be used occasionaly depending on online failures & Dead Modules  \\ \hline   
+      Backplane Correction       & \parbox[t]{5cm}{\texttt{SiStripBackPlaneCorrectionRcd,}\\\texttt{deconvolution}}  &   Manual                   & no update                               & Cluster position corrections  \\ \hline      
+      Backplane Correction       & \parbox[t]{5cm}{\texttt{SiStripBackPlaneCorrectionRcd,}\\\texttt{peak}}           &   Manual                   & no update                               & Cluster position corrections   \\ \hline          
+      Online Bad Channels        & \texttt{SiStripBadChannelRcd}           &   Manual                                & no update                               & Dead channels  \\ \hline                                      
+      Online Bad Fibers          & \texttt{SiStripBadFiberRcd}             &   Manual                                & no update                               & Dead fibers  \\ \hline                                        
+      Cluster finding thresholds & \texttt{SiStripClusterThresholdRcd}     &   Manual                                & no update                               & Cluster finding thresholds   \\ \hline
+      Online Configuration       & \texttt{SiStripConfObjectRcd}           &   Manual                                & no update                               &    \\ \hline                            
+      Online Configuration       & \parbox[t]{5cm}{\texttt{SiStripConfObjectRcd,}\\\texttt{apvphaseoffset}}  &   Manual   & no update                               &  \\ \hline
+      Dead channels              & \texttt{SiStripDetVOffRcd}              &   Manual                                & no update                               & List of Unpowered modules  \\ \hline
+      Lorentz Angle              & \parbox[t]{5cm}{\texttt{SiStripLorentzAngleRcd,}\\\texttt{deconvolution}} &   Manual & no update & Hall mobility per unit magnetic field  \\ \hline
+      Lorentz Angle              & \parbox[t]{5cm}{\texttt{SiStripLorentzAngleRcd,}\\\texttt{deconvolution}} &   Manual & no update & Hall mobility per unit magnetic field  \\ \hline
     \end{tabular}
     \end{adjustbox}
     \caption{Fundamental SiStrip Calibrations, ordered in terms of frequency of updates.}

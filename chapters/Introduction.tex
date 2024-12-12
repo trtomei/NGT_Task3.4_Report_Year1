@@ -58,7 +58,7 @@ Validity} (IOV). It is organized into \emph{Tags} and \emph{Global Tags}.
 \item A \emph{Tag} is a fully qualified set of conditions consisting of
 \emph{Payloads} and their associate IOVs. They should cover the time span required by the workload. 
 \item In \texttt{cmssw}, a special C++ class (the \emph{Record}) acts as entry point for a \emph{Payload} by importing database content on the \texttt{cmsRun} executable. Every processing workflow consumes a specific set of \emph{Records}.
-\item A \emph{Global Tag} is a set of (\emph{Record}, \emph{Tag}) pairs needed by a particular processing workflow (online data-taking, MC,
+\item A \emph{Global Tag} (often abbreviated GT in the following) is a set of (\emph{Record}, \emph{Tag}) pairs needed by a particular processing workflow (online data-taking, MC,
 re-processing). This is the final "product", typically consumed by
 CMS users.
 \end{itemize}

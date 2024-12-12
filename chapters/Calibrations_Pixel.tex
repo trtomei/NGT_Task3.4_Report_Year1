@@ -1,13 +1,28 @@
 \subsection{Pixel Tracker Calibrations}
 
-The CMS SiPixel detector is integral to the High-Level Trigger (HLT) decision-making process. This part of the report delves into the calibration prospects of the SiPixel detector, emphasizing unused records, FED cabling, gain and quality calibrations, CPE conditions, and alignment practices. Future prospects and recommendations for improving calibration workflows under the NGT framework are also discussed.
+The CMS SiPixel detector is integral to the High-Level Trigger (HLT) decision-making process.\\
+This part of the report delves into the calibration prospects of the SiPixel detector, emphasizing unused records, FED cabling, gain and quality calibrations, Cluster Position Estimator (CPE) conditions, and alignment practices.\\
+Future prospects and recommendations for improving calibration workflows under the NGT framework are also discussed.\newline \newline 
 Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tracker, of which 12 are relevant to Run 3 data-taking. From these, the following 8 are considered core and critical for data-taking:
 
 \begin{table}[h!]
     \centering
     \begin{adjustbox}{max width=\textwidth}
-    \begin{tabular}{p{3.5cm}|p{4cm}|p{2.5cm}|p{2cm}|p{4.5cm}}
+    \begin{tabular}{p{2.5cm}|p{5.7cm}|p{1.5cm}|p{2.5cm}|p{3.0cm}}
         \textbf{Name} & \textbf{Record} & \textbf{Workflow} & \textbf{Frequency of Updates} & \textbf{Description} \\ \hline
+      Lorentz Angle   & \texttt{SiPixelLorentzAngleRcd}                 & Manual & Typically a few times per year (mandatory when pixel HV changes) & Hall mobility per unit magnetic field strength\\ \hline
+      Generic Errors  & \texttt{SiPixelGenErrorDBObjectRcd}             & Manual & Typically a few times per year (mandatory when pixel HV changes) & Uncertainty on the hit position \\ \hline
+      1D-templates     & \texttt{SiPixelTemplateDBObjectRcd}             & Manual & Typically a few times per year (mandatory when pixel HV changes) & Cluster shape for hit position determination (1D)\\ \hline
+      2D-templates    & \parbox[t]{5cm}{\texttt{SiPixel2DTemplateDBObjectRcd,}\\\texttt{numerator}} & Manual & Typically a few times per year (mandatory when pixel HV changes) & Cluster shape for hit position determination (2D)\\ \hline
+      Bad channels    & \texttt{SiPixelQualityFromDbRcd}                & Manual & Typically a few times per year & Inventory of detector and readout defects \\ \hline
+      Per-pixel Gains & \texttt{SiPixelGainCalibrationForHLTRcd}        & Manual & Once or twice per year & ADC to electron conversion factors \\ \hline
+      Lorentz Angle   & \texttt{SiPixelLorentzAngleRcd,forWidth}        & Manual & Rarely (last update done in 2019) & Hall mobility per unit magnetic field strength \\ \hline
+      Cabling map     & \texttt{SiPixelFedCablingMapRcd}                & Manual & Fixed for a given detector geometry & Readout to detector ID map \\ \hline
+      Dead channels   & \texttt{SiPixelDetVOffRcd}                      & Manual & Not used & Inventory of unpowered channels \\ \hline
+      Per-column Gains& \texttt{SiPixelGainCalibrationOfflineRcd}       & Manual & Not used & ADC to electron conversion factor \\ \hline
+      Lorentz Angle   & \parbox[t]{5cm}{\texttt{SiPixelLorentzAngleRcd,}\\\texttt{fromAlignment}} & Manual & Not used & Hall mobility per unit magnetic field \\ \hline
+      Bad channles    & \parbox[t]{5cm}{\texttt{SiPixelQualityFromDbRcd,}\\\texttt{forRawToDigi}} & Manual & Not used & Detector level defects \\ \hline
+        
     \end{tabular}
     \end{adjustbox}
     \caption{Fundamental Silicon Strip Tracker Calibrations, ordered in terms of frequency of updates.}
