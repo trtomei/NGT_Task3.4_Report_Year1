@@ -1,5 +1,6 @@
 \subsection{Pixel Tracker Calibrations}
 
+The CMS SiPixel detector is integral to the High-Level Trigger (HLT) decision-making process. This part of the report delves into the calibration prospects of the SiPixel detector, emphasizing unused records, FED cabling, gain and quality calibrations, CPE conditions, and alignment practices. Future prospects and recommendations for improving calibration workflows under the NGT framework are also discussed.
 Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tracker, of which 12 are relevant to Run 3 data-taking. From these, the following 8 are considered core and critical for data-taking:
 
 \begin{table}[h!]
@@ -12,6 +13,18 @@ Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tra
     \caption{Fundamental Silicon Strip Tracker Calibrations, ordered in terms of frequency of updates.}
     \label{tab:PixelCalibrations_critical}
 \end{table}
+
+\subsubsection{Unused Records in SiPixel Calibration}
+Several records remain unused at HLT but hold relevance for other operational aspects:
+\begin{itemize}
+    \item \textbf{SiPixelDetVOffRcd}: Lists detector IDs with HV or LV off. Payload is ideal or empty.
+    \item \textbf{SiPixelGainCalibrationOfflineRcd}: Stores gain and pedestal values for offline analysis.
+    \item \textbf{SiPixelLorentzAngleRcd ("from alignment")}: Contains Lorentz Angle offsets, outdated since 2017.
+    \item \textbf{SiPixelTemplateDBObjectRcd ("0T")}: Used during 0T templated tracking for PixelRecHits.
+\end{itemize}
+
+\subsubsection{FED Cabling and Calibration Maps}
+The \texttt{SiPixelFedCablingMapRcd} records cabling maps connecting FEDs to readout channels. While not a direct calibration, this record plays a vital role in detector topology and reconstruction. This was last updated in 2017 with the transition to the Pixel Phase-1 detector.
 
 \subsubsection{Bad components}
 Description: This payload contains the DetIDs and ROCs associated with those DetIDs that are considered "dead." Used by tracking.\\
@@ -36,6 +49,32 @@ Description: used in the generic CPE (cluster position estimation) algorithm as 
 Record Name:  \texttt{SiPixelGenErrorDBObjectRcd}
 
 \subsubsection{Pixel Alignment}
-Record Name: \texttt{TrackerAlignmentErrorRcd} (for alignment), \texttt{TrackerSurfaceDeformationRcd} (for surface deformation) and  \texttt{GlobalPositonRcd} (defining the relative position of the subdetectors) 
+Records used: 
+\begin{itemize}
+\item \texttt{TrackerAlignmentErrorRcd} (for alignment), 
+\item \texttt{TrackerSurfaceDeformationRcd} (for surface deformation)  \item \texttt{GlobalPositonRcd} (defining the relative position of the subdetectors) 
+\end{itemize}
 
-\subsubsection{Others}
+Tracker alignment is tightly coupled with CPE conditions to mitigate Lorentz Angle miscalibrations. High-granularity offline PCL helps optimize biases but is prone to weak modes.
+HLT reconstruction uses the Pixel CPE Fast algorithm (a variant of the generic algorithm), while offline operations rely on Pixel Template reconstruction. Discrepancies between these algorithms necessitate customized alignment procedures.
+
+\subsubsection*{Future Prospects and Integration in NGT Demonstrator Workflow}
+\begin{itemize}
+    \item \textbf{Bad Components Masking}:
+    \begin{itemize}
+        \item Already implemented in PCL workflows and requires minimal statistics for updates.
+        \item Demonstrated to improve track building in inside-out muon reconstruction.
+    \end{itemize}
+    \item \textbf{Pixel Alignment}:
+    \begin{itemize}
+        \item Enhancing alignment directly impacts B-tagging and physics trigger performance.
+        \item Requires tailored workflows to address weak modes effectively.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Recommendations}
+\begin{itemize}
+    \item Prioritize the inclusion of bad components masking in the NGT demonstrator workflow due to its operational simplicity and demonstrated impact.
+    \item Develop alignment calibration workflows that directly integrate HLT tracks to ensure compatibility.
+    \item Evaluate the feasibility of frequent updates for gains and CPE conditions to maintain precision.
+\end{itemize}

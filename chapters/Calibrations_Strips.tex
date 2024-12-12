@@ -1,5 +1,6 @@
 \subsection{Strip Tracker Calibrations}
 
+The CMS SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process. The calibration of its parameters, particularly for tracking and reconstruction, is vital for maintaining performance and ensuring robust data acquisition. This document summarizes the key prospects and current practices for optimizing SiStrip calibrations at HLT.\\
 Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tracker, of which 21 are relevant to Run 3 data-taking. From these, the following 4 are considered core and critical for data-taking:
 
 \begin{table}[h!]
@@ -70,4 +71,31 @@ This is performed via a multi-run harvesting based PCL workflow.
 
 \subsubsection{CPE conditions}
 
-\subsection{Others}
+\begin{itemize}
+    \item Two key CPE-related conditions are maintained:\newline
+    \texttt{SiStripLorentzAngleRcd} and \texttt{SiStripBackPlaneCorrectionRcd}.
+    \item Both conditions are provided in two configurations: "deconvolution" and "peak," depending on the readout mode.
+    \item Updates to these calibrations require dedicated workflows involving special datasets (e.g., cosmics, low pile-up collisions).
+    \item The conditions have seen minimal updates since early Run 2, as miscalibrations are often treated as geometric mispositioning during tracker alignment procedures.
+    \item A monitoring workflow exists in the Prompt Calibration Loop (PCL), but direct calibration at HLT is limited.
+\end{itemize}
+
+\subsubsection*{Future Prospects and Integration in NGT Demonstrator Workflow}
+\begin{itemize}
+    \item \textbf{Bad Components Masking}:
+    \begin{itemize}
+        \item Already implemented in PCL workflows and requires minimal statistics for updates.
+        \item Demonstrated to improve track building in inside-out muon reconstruction.
+    \end{itemize}
+    \item \textbf{G2 Gains Calibration}:
+    \begin{itemize}
+        \item High-statistics requirement makes frequent updates infeasible.
+        \item Potential minor impact on track building and cluster charge thresholds.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Recommendations}
+\begin{itemize}
+    \item Prioritize the inclusion of bad components masking in the NGT demonstrator workflow due to its operational simplicity and demonstrated impact.
+    \item Consider periodic evaluations for integrating gain calibrations as part of long-term upgrades.
+\end{itemize}
