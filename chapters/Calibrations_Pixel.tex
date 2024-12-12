@@ -17,10 +17,10 @@ Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tra
 \subsubsection{Unused Records in SiPixel Calibration}
 Several records remain unused at HLT but hold relevance for other operational aspects:
 \begin{itemize}
-    \item \textbf{SiPixelDetVOffRcd}: Lists detector IDs with HV or LV off. Payload is ideal or empty.
-    \item \textbf{SiPixelGainCalibrationOfflineRcd}: Stores gain and pedestal values for offline analysis.
-    \item \textbf{SiPixelLorentzAngleRcd ("from alignment")}: Contains Lorentz Angle offsets, outdated since 2017.
-    \item \textbf{SiPixelTemplateDBObjectRcd ("0T")}: Used during 0T templated tracking for PixelRecHits.
+    \item \texttt{SiPixelDetVOffRcd}: Lists detector IDs with HV or LV off. Payload is ideal or empty.
+    \item \texttt{SiPixelGainCalibrationOfflineRcd}: Stores gain and pedestal values for offline analysis.
+    \item \texttt{SiPixelLorentzAngleRcd ("from alignment")}: Contains Lorentz Angle offsets, outdated since 2017.
+    \item \texttt{SiPixelTemplateDBObjectRcd ("0T")}: Used during 0T templated tracking for PixelRecHits.
 \end{itemize}
 
 \subsubsection{FED Cabling and Calibration Maps}
@@ -57,6 +57,13 @@ Records used:
 
 Tracker alignment is tightly coupled with CPE conditions to mitigate Lorentz Angle miscalibrations. High-granularity offline PCL helps optimize biases but is prone to weak modes.
 HLT reconstruction uses the Pixel CPE Fast algorithm (a variant of the generic algorithm), while offline operations rely on Pixel Template reconstruction. Discrepancies between these algorithms necessitate customized alignment procedures.
+
+\begin{figure}[htbp]
+   \centering
+	\includegraphics[width=0.5\textwidth]{figures/pixel_alignment_sketch.png}
+   \caption{Sketch showing the transverse view of the Phase-0 barrel pixel subdetector, made of successive layers of silicon modules. The alternating orientation of the modules within each layer is indicated by the triangles. The blue (grey) circles represent the reconstructed hit positions using incorrect (correct) Lorentz angles in the presence of a magnetic field . The grey curve corresponds to a track built from the hits that were reconstructed with the correct Lorentz angles. Hits reconstructed with incorrect Lorentz angles are displaced in a direction defined by the orientation of the module, increasing the residual distance between the hits and the track. \cite{CMS:2022ali}}
+   \label{fig:pixelAlignment}
+\end{figure}
 
 \subsubsection*{Future Prospects and Integration in NGT Demonstrator Workflow}
 \begin{itemize}
