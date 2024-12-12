@@ -1,0 +1,34 @@
+%!TEX root = ../main.tex
+\subsection{Muons System Calibrations}
+
+Out of the 326 conditions in the HLT GT,
+41 are related to the muon systems:
+14 to the Drift Tubes (DTs),
+20 to the Cathode Strip Chambers (CSCs),
+and
+7 to the Resistive Plate Chambers (RPCs).
+No conditions are related to the Gas Electron Multipliers (GEMs) as of 2024,
+and
+the RPCs don't have calibrations that can affect the data quality.
+The only conditions that are considered core for data-taking are:
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{p{3.5cm}|p{4.5cm}|p{2.5cm}|p{2cm}|p{4cm}}
+        \textbf{Name} & \textbf{Record} & \textbf{Workflow} & \textbf{Frequency of Updates} & \textbf{Description} \\ \hline
+    DT drift velocity & \texttt{DTMtime} & Manual & Rarely & Drift velocity of the ionisation electrons. \\ 
+    DT timing offset & \texttt{DTTtrig} & Manual & Yearly & Timing offset of the ionisation electrons. \\ 
+    CSC time corrections 	& \texttt{CSCChamberTimeCorrections} & Manual & Yearly & Adjustments to center reco. hit times at $t=0$. \\
+    						& \texttt{CSCDBChipSpeed} & Manual & Rarely & \\ 
+	CSC electronics & \texttt{CSCDBGains} & Manual & Yearly & Electronics parameters of strips channels. \\
+                    & \texttt{CSCDBPedestals} & Manual & Yearly &  \\
+					& \texttt{CSCDBCrosstalk} & Manual & Yearly &  \\ 
+                    & \texttt{CSCDBNoiseMatrix} & Manual & Yearly &  \\
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Fundamental Muon System Calibrations, ordered in terms of frequency of updates.}
+    \label{tab:MuonCalibrations_critical}
+\end{table}
+
+In all conditions related to the muon systems, all workflows are manual, the frequency of updates is small, and payloads are always kept the same between online and offline.
+As such, we conclude that the muon system doesn't provide any candidate conditions for the NGT project.
