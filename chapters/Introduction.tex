@@ -15,6 +15,8 @@ The CMS detector is composed of various sub-detectors, each with specific tasks 
 Central to the AlCa workflow is the \textbf{Prompt Calibration Loop} (PCL), where conditions are derived prior to full reconstruction. After the HLT, there are two main reconstruction streams: \textit{express} and \textit{physics}. The express stream processes a subset of the triggered data and runs the express reconstruction. The express stream has highest priority at Tier-0 and is completed within 1-2 hours. The conditions are derived from this stream and uploaded to the offline conditions database (DB). There exist additional calibration streams within PCL outside of the express stream, that also contribute to the DB.
 The physics stream then performs the prompt reconstruction, where it uses the conditions from the DB. This is done within 48 hours and the outcome gets stored and then used for physics analysis. These workflows are nicely visualized within Fig. \ref{fig:PCL}. Other calibration workflows exist, such as \textbf{Online to Offline} (O2O). O2O plays a critical role, as it passes on the online conditions within the sub-detector infrastructure to DB, making it accessible for event reconstruction.
 \newline \newline
+%%% Here we should add something about the automation framework
+For workflows that need more than 48 hours to be executed, an automated framework called \textbf{Automation}, Jenkins based, was developed for Run 3. It takes the Prompt reconstruction datasets as input and makes use of the accumulated data for derivation of the alignment and calibrations constants that need a sizeable sample. Typical workflows use a few inverse femtobarns of data for the uploads of the conditions to future Prompt reconstruction.  
 
 % TODO: General introduction
 
@@ -50,12 +52,12 @@ With conditions data we mean non-event data resulting mainly from calibrations a
 The condition data is stored in \emph{payloads} and described with additional metadata information, such as the \emph{Interval of
 Validity} (IOV). It is organized into \emph{Tags} and \emph{Global Tags}.
 \begin{itemize}
-\item The "atom” of conditions data is the \emph{Payload}, representing the set of parameters consumed in the workflows of the physics data processing. It Associated to a user-defined C++ class in CMSSW (\texttt{CondFormats} objects)
+\item The "atom” of conditions data is the \emph{Payload}, representing the set of parameters consumed in the workflows of the physics data processing. It is associated to a user-defined C++ class in CMSSW (\texttt{CondFormats} objects)
 \item The time information for the validity of the \emph{Payloads} is specified with a parameter called \emph{Interval Of Validity} (IOV). Time is represented by a Run number, luminosity section id, or an universal timestamp.
 
 \item A \emph{Tag} is a fully qualified set of conditions consisting of
-Payloads and their associate IOVs. They should cover the time span required by the workload. 
-\item In \texttt{cmssw}, a special C++ class (the \emph{Record}) acts as entry point for a Payload by importing database content on the \texttt{cmsRun} executable. Every processing workflow consumes a specific set of Records
+\emph{Payloads} and their associate IOVs. They should cover the time span required by the workload. 
+\item In \texttt{cmssw}, a special C++ class (the \emph{Record}) acts as entry point for a \emph{Payload} by importing database content on the \texttt{cmsRun} executable. Every processing workflow consumes a specific set of \emph{Records}.
 \item A \emph{Global Tag} is a set of (\emph{Record}, \emph{Tag}) pairs needed by a particular processing workflow (online data-taking, MC,
 re-processing). This is the final "product", typically consumed by
 CMS users.
@@ -63,61 +65,6 @@ CMS users.
 
 %\subsection{O2O}
 %\subsection{Other}
-
-%%% Here we should add something about the automation framework
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 % The objective of \ngt{}'s \task{3.1.1} is to reconstruct all events received
 % from the L1T at a rate of \SI{750}{\kilo\hertz} during Run-\num{5} data taking,
