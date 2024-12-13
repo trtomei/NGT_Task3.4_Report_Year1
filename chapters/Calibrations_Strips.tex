@@ -34,6 +34,49 @@ Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tra
     \label{tab:StripCalibrations_critical}
 \end{table}
 
+\subsubsection{Hit Reconstruction in the Strip Detector}
+
+The data acquisition system (DAQ) of the strip detector processes signals through algorithms executed on off-detector electronics, specifically on the front-end driver (FED) modules. These algorithms:
+\begin{itemize}
+    \item Subtract pedestals (baseline signal levels without particles).
+    \item Remove common mode noise (event-by-event baseline fluctuations within each tracker chip).
+    \item Perform zero-suppression, retaining only strips with charges exceeding specific thresholds:
+    \begin{itemize}
+        \item \(> 5\sigma\) above the channel noise, or
+        \item \(> 2\sigma\) for a strip and at least one neighbor.
+    \end{itemize}
+\end{itemize}
+
+As a result, only a fraction of channels are stored offline for further processing.\\
+
+Offline, clusters are formed by:
+\begin{enumerate}
+    \item Seeding with strips that pass zero-suppression and have charges \(> 3\sigma\) above the noise.
+    \item Adding neighboring strips with charges \(> 2\sigma\).
+    \item Retaining clusters with total charge \(> 5\sigma_{\text{cluster}}\), where:
+    \[
+    \sigma_{\text{cluster}} = \sqrt{\sum_i \sigma_i^2},
+    \]
+    and \(\sigma_i\) is the noise for strip \(i\).
+\end{enumerate}
+
+The position of each hit is determined as the charge-weighted average of strip positions, corrected for:
+\begin{itemize}
+    \item Lorentz drift, shifting hits by approximately \(10~\mu\text{m}\) in the TIB and \(20~\mu\text{m}\) in the TOB.
+    \item Inefficient charge collection near the sensor backplane, introducing a \(10~\mu\text{m}\) shift in 500~\(\mu\text{m}\) thick silicon, but negligible in 320~\(\mu\text{m}\) thick silicon.
+\end{itemize}
+
+The inefficiency arises from the narrow time window of the APV25 readout chip, which limits charge integration and reduces out-of-time background.\\
+
+The hit position uncertainty is usually parameterized based on the expected cluster width from the track angle. However:
+\begin{itemize}
+    \item For clusters with observed widths exceeding the expected width by \(> 3.5\times\), the uncertainty is set to the binary resolution:
+    \[
+    \text{Binary Resolution} = \frac{\text{Cluster Width}}{\sqrt{12}}.
+    \]
+    \item This broadening is caused by capacitive coupling between strips or energetic delta rays.
+\end{itemize}
+
 \subsubsection{DAQ O2O conditions}
  The Strip DAQ O2O populates tracker conditions from the online master data storage (OMDS) to the offline reconstruction conditions database (ORCON). 
 Six types of payloads are populated in this O2O: 

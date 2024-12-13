@@ -45,6 +45,27 @@ The \texttt{SiPixelFedCablingMapRcd} records cabling maps connecting FEDs to rea
 Description: This payload contains the DetIDs and ROCs associated with those DetIDs that are considered "dead." Used by tracking.\\
 Record Name: \texttt{SiPixelQualityRcd} 
 
+\subsubsection{Pixel hit position reconstruction}
+
+The position of a pixel cluster in the transverse (\(u\)) and longitudinal (\(v\)) directions on the sensor is determined by projecting the cluster onto the respective axis and summing the charge collected in pixels with the same coordinate. For single-pixel clusters, the position is the center of the pixel, corrected for Lorentz drift. For larger clusters, the hit position (\(u_{\text{hit}}\)) is computed using the relative charge in the first and last pixels of the projected cluster:
+
+\begin{equation}
+u_{\text{hit}} = u_{\text{geom}} + \frac{Q_{\text{last}} - Q_{\text{first}}}{2(Q_{\text{last}} + Q_{\text{first}})} |W_u - W_u^{\text{inner}}| - \frac{L_u}{2},
+\end{equation}
+
+where:
+\begin{itemize}
+    \item \(Q_{\text{first}}\), \(Q_{\text{last}}\): Charges in the first and last pixels of the cluster.
+    \item \(u_{\text{geom}}\): Geometric center of the projected cluster.
+    \item \(L_u/2 = D \tan \Theta_u^{\text{L}}/2\): Lorentz shift, with \(\Theta_u^{\text{L}}\) as the Lorentz angle and \(D\) as the sensor thickness.
+    \item \(W_u^{\text{inner}}\): Geometrical width excluding the first and last pixels, zero for clusters smaller than three pixels.
+    \item \(W_u = D \left| \tan (\alpha_u - \pi/2) + \tan \Theta_u^{\text{L}} \right|\): Charge width, derived from the track impact angle (\(\alpha_u\)) and Lorentz angle.
+\end{itemize}
+
+If no track is available, \(\alpha_u\) is assumed based on the particle's origin at the CMS detector center. The formula accounts for the partial charge deposition in the first and last pixels, estimating the extension of charge into these pixels (\(W_u - W_u^{\text{inner}}\)), which ranges between zero and twice the pixel pitch. This extension, combined with the relative charge, provides the edges of the charge distribution. The mean value of these edges, corrected for Lorentz drift, yields the cluster position.
+
+For pixel barrel detectors, the Lorentz shift is approximately 59~\(\mu\)m.
+
 \subsubsection{Pixel Lorentz Angle}
 Description: The 'no label' payload contains the value of LorentzAngle / Tesla for the Barrel Pixel and Forward Pixel separately (due to different HV constants, geometry, etc.).\\
 Record Name: \texttt{SiPixelLorentzAngleRcd} 
@@ -57,6 +78,20 @@ Labels = none, \texttt{fromAlignment} or \texttt{forWidth} - given when included
 \subsubsection{Pixel Templates}
 Description: used in the templated tracking algorithm for Pixel RecHits.
 Record Name:  \texttt{SiPixelTemplateDBObjectRcd} 
+Radiation exposure in the pixel detector significantly impacts charge collection and degrades the performance of the standard hit reconstruction algorithm, particularly in highly irradiated sensors. To address this, a template-based reconstruction algorithm compares the observed cluster charge distribution to precomputed templates generated using the \texttt{PIXELAV} simulation.\\
+Templates are created by simulating particle tracks traversing pixel modules at various angles. Each pixel is subdivided into nine bins along the \(u\) (or \(v\)) axis, and the charge profile of the cluster is projected into an array of 13 pixels (or 23 for \(v\)). Clusters with excessively high charges, distorted by energetic delta rays, are excluded. The mean charge \(\bar{S}_{i,j}\) and RMS charge distributions for each bin are computed, along with other relevant cluster properties.\\
+The observed charge \(P_i\) in each pixel \(i\) is compared to the expected template charge \(S_{i,j}\) to determine the likely bin \(j\) where the particle crossed the sensor. This is achieved by minimizing the \(\chi^2\) function:
+\[
+\chi^2(j) = \sum_i \left( \frac{P_i - N_j S_{i,j}}{\Delta P_i} \right)^2,
+\]
+where \(\Delta P_i\) is the RMS charge uncertainty, and \(N_j\) normalizes the cluster charge to the template:
+\[
+N_j = \frac{\sum_i \frac{P_i S_{i,j}}{(\Delta P_i)^2}}{\sum_i \frac{S_{i,j}^2}{(\Delta P_i)^2}}.
+\]
+This approach provides the best estimate of the hit position, even for complex multi-pixel clusters.\\
+
+For single-pixel clusters, the hit position is corrected for Lorentz drift and radiation damage using the average residual bias. For multi-pixel clusters, the hit position is refined by approximating the template charge near the best \(j\)-bin as \((1-r)S_{i,j-1} + rS_{i,j+1}\) and minimizing \(\chi^2\) with respect to \(r\).\\
+The reconstruction algorithm is validated on PIXELAV simulation samples used to generate the templates. By comparing reconstructed and true hit positions, residual biases are determined and accounted for in collision data. The RMS of these differences defines the uncertainty in the reconstructed hit position, ensuring robust performance across varying conditions.
 
 \subsubsection{Generic Errors}
 
