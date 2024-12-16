@@ -1,0 +1,49 @@
+\subsection{Beam Spot Calibration}
+
+The Beamspot online workflow has been updated in Run 3 to address the absence of the SCAL system.\\
+This does not affect the actual fit to tracks or primary vertex distributions but modifies the infrastructure for handling BeamSpot information. Key changes include:
+\begin{itemize}
+    \item Replacement of SCAL-based processes.
+    \item Improved workflow and fallback mechanisms for edge cases.
+    \item Arbitration between old and new payloads for dynamic selection.
+\end{itemize}
+
+The old Run 2 workflow consisted in the following steps:
+\begin{itemize}
+    \item BeamSpot clients dumped data to text files processed through the SCAL system.
+    \item Data was forwarded to the DIP and HLT systems.
+\end{itemize}
+
+While the new workflow consists of the these steps:
+\begin{itemize}
+    \item SCAL system replaced by direct DB uploads.
+    \item An \texttt{ESProducer} arbitrates between BeamSpot payloads dynamically.
+    \item A fallback mechanism uses dummy values if no good payloads are available.
+    \item The system is triggered whenever a tag is updated, ensuring robust operations.
+\end{itemize}
+
+Failures in past workflows (e.g., due to unavailable tracks at HLT) necessitated a fallback mechanism. The key features include:
+\begin{itemize}
+    \item Arbitration logic to decide between stored and new BeamSpot values.
+    \item Checks for fit convergence and recency of results.
+    \item Use of a 5-lumi-section sliding window for BeamSpot fits.
+    \item Ongoing studies on transverse widths, $\sigma_Z$, track counts, and PVs.
+\end{itemize}
+
+
+The new O2O mechanism ensures timely updates:
+\begin{itemize}
+    \item Automatically checks the time since the last payload upload (default threshold: 1 day).
+    \item Handles machine transitions (e.g., LS, TS, MD, pp $\leftrightarrow$ HI).
+    \item Uploads a "fake" BeamSpot object with inflated uncertainties if necessary.
+    \item Arbitration based on the time-of-creation of payloads, stored in \texttt{BeamSpotOnlineObjects}.
+\end{itemize}
+
+The updated Beam Spot online workflow addresses Run 3 requirements:
+\begin{itemize}
+    \item SCAL system replaced with DB uploads and fallback logic.
+    \item Successful implementation of O2O mechanisms for special machine transitions.
+    \item Ongoing work includes monitoring, fallback logic finalization, and integration with DIP.
+\end{itemize}
+
+
