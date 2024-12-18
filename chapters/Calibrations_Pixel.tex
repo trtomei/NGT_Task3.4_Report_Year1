@@ -91,7 +91,7 @@ N_j = \frac{\sum_i \frac{P_i S_{i,j}}{(\Delta P_i)^2}}{\sum_i \frac{S_{i,j}^2}{(
 This approach provides the best estimate of the hit position, even for complex multi-pixel clusters.\\
 
 For single-pixel clusters, the hit position is corrected for Lorentz drift and radiation damage using the average residual bias. For multi-pixel clusters, the hit position is refined by approximating the template charge near the best \(j\)-bin as \((1-r)S_{i,j-1} + rS_{i,j+1}\) and minimizing \(\chi^2\) with respect to \(r\).\\
-The reconstruction algorithm is validated on PIXELAV simulation samples used to generate the templates. By comparing reconstructed and true hit positions, residual biases are determined and accounted for in collision data. The RMS of these differences defines the uncertainty in the reconstructed hit position, ensuring robust performance across varying conditions.
+The reconstruction algorithm is validated on \texttt{PIXELAV} simulation \cite{Swartz:687440} samples used to generate the templates. By comparing reconstructed and true hit positions, residual biases are determined and accounted for in collision data. The RMS of these differences defines the uncertainty in the reconstructed hit position, ensuring robust performance across varying conditions.
 
 \subsubsection{Generic Errors}
 
