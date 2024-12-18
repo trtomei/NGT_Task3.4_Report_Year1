@@ -111,12 +111,12 @@ Therefore, a \texttt{AlCaReco} stream dedicated to the bad component identificat
 \item The DQM output contains one cluster occupancy histogram per strip detector. These histograms are used as input for the bad component algorithms. In addition, the \texttt{ClusterVsAPVCycle} and the \texttt{TotalNumberOfCluster} histograms are stored for each subdetector. 
 \end{itemize}
 
-Once the DQM output of a given run with enough statistics is available from the central DQM harvesting, the bad component identification can be performed.
+Once the DQM output of a given run with enough statistics is available from the central DQM harvesting, the bad component identification can be performed.\\ Fig.~\ref{fig:fill10200PCL} shows schematically the workflow for the Strip bad components identification.
 
 \begin{figure}[htbp]
    \centering
 	\includegraphics[width=0.7\textwidth]{figures/BadComponentWorkflow_small.png}
-   \caption{The workflow for the Bad Component Identification is shown in the sketch above.}
+   \caption{The workflow for the Strip Bad Component Identification is shown in the sketch above.}
    \label{fig:fill10200PCL}
 \end{figure}
 
@@ -132,6 +132,15 @@ This is performed via the so-called tickmark O2O
 The charge measured by each cluster on track is corrected for the track path in the sensor depletion region and therefore used to build the distribution of the ionization charge per unit of length. The voltage gain is tuned to have the most probable value of these distributions, made for every sensors, set to 300 ADC counts / mm. This procedure requires a lot of track statistics (around 1B clusters).\\
 This is performed via a multi-run harvesting based PCL workflow.
 \end{itemize}
+
+Fig.~\ref{fig:StripClusterCharge} shows the time evolution of the calibrated SiStrip cluster charge (after having applied both the tickmark and particle level gain calibraitons) as a function of the integrated luminosity during LHC Run 3. 
+ 
+\begin{figure}[htbp]
+   \centering
+	\includegraphics[width=0.8\textwidth]{figures/CalibratedCharge_run3_lumi.png}
+   \caption{Time evolution of the calibrated SiStrip cluster charge as a function of the integrated luminosity during LHC Run 3, shown separately for different detector regions. Discontinuities in the trends correspond to periodic re-calibrations. The increasing deviations from the nominal calibration value of 300 ADC/mm highlight the impact of silicon sensor and readout fiber ageing, emphasizing the need for more frequent calibration updates to maintain optimal detector performance.}
+   \label{fig:StripClusterCharge}
+\end{figure}
 
 \subsubsection{CPE conditions}
 
