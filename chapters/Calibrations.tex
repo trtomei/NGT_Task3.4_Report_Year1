@@ -3,8 +3,17 @@
 
 %% General
 % From NGT Proposal: 
-The general goal of this task is to optimise the calibration process for the online data-taking of the CMS detector. Task 3.4 foresees to use advanced computing techniques such as predictive model leveraging AI techniques as well as improving traditional methods currently employed in CMS.\\
-Such an improvement is essential to push real-time analysis based on $\mathrm{R}^3$ software (Task 3.1) to the same accuracy that we typically achieve offline. One could then store high-quality high-level information, which implies a big save in terms of storage.
+The general goal of this task is to optimise the calibration procedures for the online HLT data-taking of the CMS detector. Task 3.4 involves leveraging advanced computing techniques, including AI-driven predictive models, while enhancing traditional CMS calibration methods. \\
+Such an improvement is essential to push real-time analysis based on $\mathrm{R}^3$ software (Task 3.1) to the same accuracy that we typically achieve offline. One could then store high-quality high-level information, which implies a big save in terms of storage.\\
+\newline
+A conceptual design of the ultimate setup foreseen in the context of the $\mathrm{R}^3$  project is shown in  Fig.~\ref{fig:NGT-HLT_CalibrationWorkflow}. \\
+The input rate of \SI{40}{\mega\hertz} LHC collisions will be processed by the hardware Level 1 trigger system (L1T), whose output is foreseen to be \SI{750}{\kilo\hertz} during Run-\num{5} data taking. \\
+\newline
+In order to ensure an \emph{Offline-like} quality of the reconstruction to enable some "quick and dirty" analyses using the reconstructed objects by the HLT, without requiring additional steps, a dedicated real-time calibration system will need to process the entirety of the L1T accept stream.\\  
+A buffer composed of SSDs will temporarily store events from the data acquisition system after L1T event filtering, with a retention period of approximately 8 to 12 hours. This buffer ensures that events remain available until optimal calibrations can be derived for the entire dataset (for an actual discussion of the architectural layout of this system refer to Section \ref{sec:DAQIntegration}.\\
+\newline
+Immediately after data-taking, a small fraction (a few percent) of the buffered data, selected via light filtering of the L1T bits, will be processed by an accelerated calibration workflow. This workflow focuses on deriving the most critical conditions required for the online event selection at the HLT.\\
+Once these conditions are stored in a conditions database and all necessary calibrations are completed, the HLT processing of the buffered data will commence, ensuring optimal calibration and event reconstruction. 
 
 % Deliverable/milestone: Production of a report illustrating the current calibration workflows in CMS and evaluating the impact of non-optimal calibrations on the physics performance of the online reconstruction.
 
@@ -27,7 +36,7 @@ The current preliminary survey focused on finding viable candidates for the prot
 \include{chapters/Calibrations_HCAL} % Mateusz
 \include{chapters/Calibrations_Muons} % Thiago
 
-\section{Physics Performance}
+%\section{Physics Performance} % sadly this needs to be skipped.
 
 %%% Here we discuss the 
 %% Physics performance

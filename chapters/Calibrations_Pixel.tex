@@ -1,6 +1,6 @@
 \subsection{Pixel Tracker Calibrations}
 
-The CMS SiPixel detector is integral to the High-Level Trigger (HLT) decision-making process, as it provides information for the seeding of the charged particle tracking algorithm, as well as crucial information for the determination of the primary and secondary interaction vertices.\\
+The CMS Silicon Pixel detector is integral to the High-Level Trigger (HLT) decision-making process, as it provides information for the seeding of the charged particle tracking algorithm, as well as crucial information for the determination of the primary and secondary interaction vertices \cite{Dominguez:1481838,Adam_2021}.\\
 This part of the report delves into the calibration prospects of the SiPixel detector, emphasising unused records, Front End Drive (FED) cabling, gain and quality calibrations, Cluster Position Estimator (CPE) conditions, and alignment practices.\\
 Future prospects and recommendations for improving calibration workflows under the NGT framework are also discussed.\newline \newline 
 Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tracker, of which 12 are relevant to Run 3 data-taking. From these, the following 8 are considered core and critical for data-taking:
@@ -95,7 +95,7 @@ The reconstruction algorithm is validated on PIXELAV simulation samples used to 
 
 \subsubsection{Generic Errors}
 
-Description: used in the generic CPE (cluster position estimation) algorithm as errors. Improves irradiation bias corrections (IBC) for data.
+Description: used in the generic CPE algorithm as errors. Improves irradiation bias corrections (IBC) for data.
 Record Name:  \texttt{SiPixelGenErrorDBObjectRcd}.
 
 \subsubsection{Pixel Alignment}
@@ -105,7 +105,7 @@ Records used:
 \item \texttt{TrackerSurfaceDeformationRcd} (for surface deformation)  \item \texttt{GlobalPositonRcd} (defining the relative position of the subdetectors) 
 \end{itemize}
 
-Tracker alignment is tightly coupled with CPE conditions to mitigate Lorentz Angle miscalibrations \cite{CMS:2022ali}. High-granularity offline PCL helps optimize biases but is prone to weak modes.
+Tracker alignment is tightly coupled with CPE conditions to mitigate Lorentz Angle miscalibrations \cite{CMS:2022ali}. The high-granularity offline PCL helps to optimize local biases arising from pixel local reconstruction miscalibrations but is prone to generate systematic biases affecting the track kinematics knows as weak modes \footnote{A class of systematic biases arising from the internal symmetries of the alignment problem, such as the cylindrical symmetry of the detector, or the fact that most tracks originate from a single region of space. This results in non-physical geometrical transformations, that leave though the track $\chi^{2}$ either unchanged or slightly changed, thus difficult to tackle by standard minimization algorithms}.
 HLT reconstruction uses the Pixel CPE Fast algorithm (a variant of the generic algorithm), while offline operations rely on Pixel Template reconstruction. Discrepancies between these algorithms necessitate customized alignment procedures.
 
 \begin{figure}[htbp]

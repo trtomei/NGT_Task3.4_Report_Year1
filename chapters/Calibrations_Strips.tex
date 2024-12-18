@@ -1,6 +1,7 @@
 \subsection{Strip Tracker Calibrations}
 
-The CMS SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process.\\
+The silicon strip tracker (SST) of the CMS experimen is the largest
+detector of its kind with an active area of 200 $m^{2}$ of silicon \cite{Karimaki:368412,CERN-LHCC-2000-016,Adam_2021}. The SST detects charge deposits (hits) at discrete points along the paths of charged particles arising from the collisions produced by the LHC. These hits, together with those detected in the CMS pixel detector, are used to reconstruct the trajectories of charged particles traversing the detector, thus the SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process.\\
  The calibration of its parameters, particularly for tracking and reconstruction, is vital for maintaining performance and ensuring robust data acquisition. This section summarizes the key prospects and current practices for optimizing SiStrip calibrations at HLT.\newline \newline
 Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tracker, of which 21 are relevant to Run 3 data-taking. From these, 4 are considered core and critical for data-taking:
 
@@ -68,7 +69,7 @@ The position of each hit is determined as the charge-weighted average of strip p
 
 The inefficiency arises from the narrow time window of the APV25 readout chip, which limits charge integration and reduces out-of-time background.\\
 
-The hit position uncertainty is usually parameterized based on the expected cluster width from the track angle. However:
+The hit position uncertainty is usually parametrized based on the expected cluster width from the track angle. However:
 \begin{itemize}
     \item For clusters with observed widths exceeding the expected width by \(> 3.5\times\), the uncertainty is set to the binary resolution:
     \[
@@ -124,10 +125,10 @@ The gain calibration is performed in two sequential steps, each one delivering a
 calibration factor. These steps, referred as the calibration sequence, are:
 
 \begin{itemize}
-\item Tick Mark calibration (\texttt{SiStripApvGainRcd}): the tick marks are external signals, input into the readout chips every 35 LHC clocks, that are used to synchronize the tracker modules to the central trigger.
+\item Tick Mark calibration (\texttt{SiStripApvGainRcd}) (so called G1): the tick marks are external signals, input into the readout chips every 35 LHC clocks, that are used to synchronize the tracker modules to the central trigger.
 When the detector is synchronized, the height of the voltage pulse at the tick mark is equalized in gain among all the readout chips to 640 ADC counts. This calibration corrects for the electronic effects at the readout level but does not account for the differences at the sensor level.\\
 This is performed via the so-called tickmark O2O 
-\item Particle Calibration (\texttt{SiStripApvGain2Rcd}): the particle calibration equalizes the detector response for the measurement of minimum ionizing particles (m.i.p.) charge. \\
+\item Particle Calibration (\texttt{SiStripApvGain2Rcd}) (so called G2): the particle calibration equalizes the detector response for the measurement of minimum ionizing particles (m.i.p.) charge. \\
 The charge measured by each cluster on track is corrected for the track path in the sensor depletion region and therefore used to build the distribution of the ionization charge per unit of length. The voltage gain is tuned to have the most probable value of these distributions, made for every sensors, set to 300 ADC counts / mm. This procedure requires a lot of track statistics (around 1B clusters).\\
 This is performed via a multi-run harvesting based PCL workflow.
 \end{itemize}
