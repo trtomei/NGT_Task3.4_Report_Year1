@@ -1,17 +1,17 @@
 %!TEX root = ../main.tex
-\section{NGT--DAQ Integration} % Thiago
+\chapter{NGT--DAQ Integration} % Thiago
 
 %%% We just write the discussion we had in the whole DAQ session
 
 The Optimal Calibration system has to be embedded in the CMS trigger and data acquisition (DAQ) system,
 both in the demonstrator system and in the \Phasetwo implementation.
 We briefly review the DAQ system architecture implemented for \Runthree, 
-compare it tow the baseline DAQ architecture proposed for \Phasetwo, and 
+compare it to the baseline DAQ architecture proposed for \Phasetwo, and 
 go through a preliminary calculation of the NGT system feasibility.
 We finally discuss a minimal implementation of the demonstrator and
 how it can be integrated in the \Runthree system.
 
-\subsection{Demonstrator Integration in Run 3}
+\section{Demonstrator Integration in Run 3}
 
 The CMS DAQ system for Run 3 (DAQ3) is an intricate system, dealing with all steps of the data flow from the sub-detector front-end drivers (FEDs) through the final delivery of data streams to Tier-0. For the purposes of our discussions, we can focus on the following elements of Figure~\ref{fig:DAQ3}: 
 the \emph{Readout Units} (RUs) unpack and merge event fragments into super-fragments, which are then sent to the \emph{Builder Units} (BUs) to be further assembled into complete events. 
@@ -37,7 +37,7 @@ ii) it is \emph{democratic}, in the sense that all elements (RUs, BUs, FUs) are 
 % I want to work at the LHC!
 % I want to work at the FCC!
 
-\subsection{Baseline DAQ Architecture for \Phasetwo}
+\section{Baseline DAQ Architecture for \Phasetwo}
 
 The baseline architecture for  the \Phasetwo DAQ system is shown in Figure~\ref{fig:DAQP2}.
 A comparison with Fig.~\ref{fig:DAQ3} shows that it is a direct evolution of the \Runtwo system,
@@ -52,7 +52,7 @@ This makes the necessity of a demonstrator system even more pressing.
 \end{figure}
 
 
-\subsection{System Feasibility: Preliminary Calculation}
+\section{System Feasibility: Preliminary Calculation}
 
 As the overarching goal of the NGT project is to reconstruct and save all the L1-accepted data, 
 our first assumption is that 
@@ -71,7 +71,7 @@ $R = A^\text{L1}$ = 500\kHz, $E$ = 6.1\MB,
 and assume a flat 50\% safety factor ($s$ = 1.5).
 The discussion on the magnitude of the buffer period $\tau$ is more subtle and will be done in the next section.
 
-\subsubsection{Buffer Period}
+\subsection{Buffer Period}
 
 The amount of time during which the data has to be buffered depends on many factors,
 and we add a set of working hypotheses to be able to estimate its value.
@@ -155,7 +155,7 @@ That comes down to  $240\TB$ per server; $60\TB$ disks have recently become avai
 and there is a high probability that $120\TB$ disks will be available for \Runfour.
 So this scenario can be realised by installing two extra disks in each server of the HLT farm.
 
-\subsubsection{Nodes for the Optimal Calibration}
+\subsection{Nodes for the Optimal Calibration}
 
 The computer nodes for the optimal calibration (henceforth ``calibration nodes'') have to be integrated in the DAQ system.
 The alignment and calibration algorithms need built events to run over, so these nodes need to be downstream of the BUs.
@@ -163,7 +163,7 @@ It is easiest to locate these nodes downstream of the FUs as well --
 in this way, the FUs can naturally transmit the necessary data streams to the calibration nodes, 
 just as they do for the offline calibrations.
 
-\subsubsection{Additional Output to the Storage and Transfer System}
+\subsection{Additional Output to the Storage and Transfer System}
 
 The additional bandwidth needed to sustain the output data stream of the NGT workflow also imposes requirements on the Phase-2 DAQ system.
 Assuming we will save all the L1T-accepted events in a reduced data format comparable to the current Scouting format~\cite{CMS:2024zhe},
@@ -172,7 +172,7 @@ this will lead to an additional output of $500\kHz
 \times 25\,\text{kB}$ = $12.5\GBpers$.
 This is comparable in magnitude, albeit smaller, to the 51\,GB/s quoted for the storage throughput in the DAQ-HLT TDR.
 
-\subsection{Minimum Minimorum NGT Demonstrator}
+\section{Minimum Minimorum NGT Demonstrator}
 
 In view of the discussion above, a minimal NGT demonstrator would take the following form:
 \begin{itemize}
@@ -210,5 +210,3 @@ The framework for rerunning the HLT with an alternate set of calibration has alr
 \item \textbf{Compare the performance of the original vs re-run Scouting.}
 This should demonstrate the effect of the updated calibrations. 
 \end{itemize}
-
-
