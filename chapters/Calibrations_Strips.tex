@@ -62,7 +62,7 @@ Offline, clusters are formed by:
 
 The position of each hit is determined as the charge-weighted average of strip positions, corrected for:
 \begin{itemize}
-    \item Lorentz drift, shifting hits by approximately \(10~\mu\text{m}\) in the TIB and \(20~\mu\text{m}\) in the TOB.
+    \item Lorentz drift, shifting hits by approximately \(10~\mu\text{m}\) in the Tracker Inner Barrel (TIB) and \(20~\mu\text{m}\) in the Tracker Outer Barrel (TOB).
     \item Inefficient charge collection near the sensor backplane, introducing a \(10~\mu\text{m}\) shift in 500~\(\mu\text{m}\) thick silicon, but negligible in 320~\(\mu\text{m}\) thick silicon.
 \end{itemize}
 
@@ -90,7 +90,7 @@ Six types of payloads are populated in this O2O:
 \end{itemize}
 
 \subsubsection{DCS O2O conditions}
- The Strip DCS O2O populates tracker HV/LV information from PVSS database to the offline condition database (\texttt{ORCON}). This DCS info is used in prompt reconstruction. Modules that are OFF are retrieved form the PVSS database and stored in the condition database via hourly cron jobs. Three cron jobs are set up for the DCS O2O, including one production job and two validation jobs, each write to a different tag in the condition database with a different delay in time: 
+ The Strip DCS O2O (discussed in Section \ref{sec:CMScalibration}) populates tracker Hight Voltage / Low Voltage information from PVSS database to the offline condition database (\texttt{ORCON}). This DCS info is used in prompt reconstruction. Modules that are OFF are retrieved form the PVSS database and stored in the condition database via hourly cron jobs. Three cron jobs are set up for the DCS O2O, including one production job and two validation jobs, each write to a different tag in the condition database with a different delay in time: 
 \begin{itemize}
 \item 1 hour Delay Validation: populates HV/LV states until 1 hour before the cron job execution;
 \item 13 hours Delay Validation: populates HV/LV states until 13 hour before the cron job execution;
@@ -103,10 +103,10 @@ For the identification of bad components dedicated to a given run it is importan
 
 Therefore, a \texttt{AlCaReco} stream dedicated to the bad component identification in the strip tracker was introduced in the \texttt{AlCaReco} workflow. It is called \texttt{ALCARECOSiStripCalZeroBias} and has the following properties:
 \begin{itemize}
-\item  The input are the digis from standard reconstruction since they are independent from bad channel masking. The reconstruction is performed up to cluster (so only the digi to cluster step is performed in the AlCaReco).
+\item  The input is the digitized output from standard reconstruction since it is independent from bad channel masking. The reconstruction is performed up to cluster (so only the digi to cluster step is performed in the AlCaReco).
 \item Only bad components from cabling and o2o are taken into account during reconstruction. Bad components from offline analysis are not considered.
 \item Only events with random trigger are selected. For collision data the HLT path \texttt{HLT\_ZeroBias} and for cosmic data the \texttt{HLT\_Random} is chosen.
-\item The output of the stream contains only the cluster collection and the \texttt{L1AcceptBunchCrossings} collection (needed by the filters against APV induced noise). This can be used as starting point in case the calibration has to be redone.
+\item The output of the stream contains only the cluster collection and the \texttt{L1AcceptBunchCrossings} collection (needed by the filters against the APV25 readout chip induced noise). This can be used as starting point in case the calibration has to be redone.
 \item The DQM output contains one cluster occupancy histogram per strip detector. These histograms are used as input for the bad component algorithms. In addition, the \texttt{ClusterVsAPVCycle} and the \texttt{TotalNumberOfCluster} histograms are stored for each subdetector. 
 \end{itemize}
 
@@ -127,7 +127,7 @@ calibration factor. These steps, referred as the calibration sequence, are:
 \item Tick Mark calibration (\texttt{SiStripApvGainRcd}): the tick marks are external signals, input into the readout chips every 35 LHC clocks, that are used to synchronize the tracker modules to the central trigger.
 When the detector is synchronized, the height of the voltage pulse at the tick mark is equalized in gain among all the readout chips to 640 ADC counts. This calibration corrects for the electronic effects at the readout level but does not account for the differences at the sensor level.\\
 This is performed via the so-called tickmark O2O 
-\item Particle Calibration (\texttt{SiStripApvGain2Rcd}): the particle calibration equalizes the detector response for the measurement of the m.i.p. charge. \\
+\item Particle Calibration (\texttt{SiStripApvGain2Rcd}): the particle calibration equalizes the detector response for the measurement of minimum ionizing particles (m.i.p.) charge. \\
 The charge measured by each cluster on track is corrected for the track path in the sensor depletion region and therefore used to build the distribution of the ionization charge per unit of length. The voltage gain is tuned to have the most probable value of these distributions, made for every sensors, set to 300 ADC counts / mm. This procedure requires a lot of track statistics (around 1B clusters).\\
 This is performed via a multi-run harvesting based PCL workflow.
 \end{itemize}
@@ -150,7 +150,7 @@ This is performed via a multi-run harvesting based PCL workflow.
         \item Already implemented in PCL workflows and requires minimal statistics for updates.
         \item Demonstrated to improve track building in inside-out muon reconstruction.
     \end{itemize}
-    \item \textbf{G2 Gains Calibration}:
+    \item \textbf{Particle Gains Calibration (a.k.a. G2)}:
     \begin{itemize}
         \item High-statistics requirement makes frequent updates infeasible.
         \item Potential minor impact on track building and cluster charge thresholds.

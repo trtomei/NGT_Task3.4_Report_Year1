@@ -1,7 +1,7 @@
 \subsection{Pixel Tracker Calibrations}
 
-The CMS SiPixel detector is integral to the High-Level Trigger (HLT) decision-making process.\\
-This part of the report delves into the calibration prospects of the SiPixel detector, emphasizing unused records, FED cabling, gain and quality calibrations, Cluster Position Estimator (CPE) conditions, and alignment practices.\\
+The CMS SiPixel detector is integral to the High-Level Trigger (HLT) decision-making process, as it provides information for the seeding of the charged particle tracking algorithm, as well as crucial information for the determination of the primary and secondary interaction vertices.\\
+This part of the report delves into the calibration prospects of the SiPixel detector, emphasising unused records, Front End Drive (FED) cabling, gain and quality calibrations, Cluster Position Estimator (CPE) conditions, and alignment practices.\\
 Future prospects and recommendations for improving calibration workflows under the NGT framework are also discussed.\newline \newline 
 Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tracker, of which 12 are relevant to Run 3 data-taking. From these, the following 8 are considered core and critical for data-taking:
 
@@ -42,7 +42,7 @@ Several records remain unused at HLT but hold relevance for other operational as
 The \texttt{SiPixelFedCablingMapRcd} records cabling maps connecting FEDs to readout channels. While not a direct calibration, this record plays a vital role in detector topology and reconstruction. This was last updated in 2017 with the transition to the Pixel Phase-1 detector.
 
 \subsubsection{Bad components}
-Description: This payload contains the DetIDs and ROCs associated with those DetIDs that are considered "dead." Used by tracking.\\
+Description: This payload contains the module identification numbers (\texttt{DetId}) and readout chips (ROC)s numbers associated with those \texttt{DetID}s that are considered "dead." It is used by the track reconstruction algorithm.\\
 Record Name: \texttt{SiPixelQualityRcd} 
 
 \subsubsection{Pixel hit position reconstruction}
@@ -67,7 +67,7 @@ If no track is available, \(\alpha_u\) is assumed based on the particle's origin
 For pixel barrel detectors, the Lorentz shift is approximately 59~\(\mu\)m.
 
 \subsubsection{Pixel Lorentz Angle}
-Description: The 'no label' payload contains the value of LorentzAngle / Tesla for the Barrel Pixel and Forward Pixel separately (due to different HV constants, geometry, etc.).\\
+Description: The 'no label' payload contains the value of Lorentz Angle / Tesla for the Barrel Pixel and Forward Pixel separately (due to different high voltage (HV) constants, geometry, etc.).\\
 Record Name: \texttt{SiPixelLorentzAngleRcd} 
 Labels = none, \texttt{fromAlignment} or \texttt{forWidth} - given when included in a global tag.
 \begin{itemize}
