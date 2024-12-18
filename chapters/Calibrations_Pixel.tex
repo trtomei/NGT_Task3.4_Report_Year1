@@ -47,7 +47,7 @@ Record Name: \texttt{SiPixelQualityRcd}
 
 \subsubsection{Pixel hit position reconstruction}
 
-The position of a pixel cluster in the transverse (\(u\)) and longitudinal (\(v\)) directions on the sensor is determined by projecting the cluster onto the respective axis and summing the charge collected in pixels with the same coordinate. For single-pixel clusters, the position is the center of the pixel, corrected for Lorentz drift. For larger clusters, the hit position (\(u_{\text{hit}}\)) is computed using the relative charge in the first and last pixels of the projected cluster:
+The position of a pixel cluster in the transverse (\(u\)) and longitudinal (\(v\)) directions on the sensor is determined by projecting the cluster onto the respective axis and summing the charge collected in pixels with the same coordinate \cite{Tracking_2014}. For single-pixel clusters, the position is the center of the pixel, corrected for Lorentz drift. For larger clusters, the hit position (\(u_{\text{hit}}\)) is computed using the relative charge in the first and last pixels of the projected cluster:
 
 \begin{equation}
 u_{\text{hit}} = u_{\text{geom}} + \frac{Q_{\text{last}} - Q_{\text{first}}}{2(Q_{\text{last}} + Q_{\text{first}})} |W_u - W_u^{\text{inner}}| - \frac{L_u}{2},
@@ -77,7 +77,7 @@ Labels = none, \texttt{fromAlignment} or \texttt{forWidth} - given when included
 
 \subsubsection{Pixel Templates}
 Description: used in the templated tracking algorithm for Pixel RecHits.
-Record Name:  \texttt{SiPixelTemplateDBObjectRcd} 
+Record Name:  \texttt{SiPixelTemplateDBObjectRcd}. 
 Radiation exposure in the pixel detector significantly impacts charge collection and degrades the performance of the standard hit reconstruction algorithm, particularly in highly irradiated sensors. To address this, a template-based reconstruction algorithm compares the observed cluster charge distribution to precomputed templates generated using the \texttt{PIXELAV} simulation.\\
 Templates are created by simulating particle tracks traversing pixel modules at various angles. Each pixel is subdivided into nine bins along the \(u\) (or \(v\)) axis, and the charge profile of the cluster is projected into an array of 13 pixels (or 23 for \(v\)). Clusters with excessively high charges, distorted by energetic delta rays, are excluded. The mean charge \(\bar{S}_{i,j}\) and RMS charge distributions for each bin are computed, along with other relevant cluster properties.\\
 The observed charge \(P_i\) in each pixel \(i\) is compared to the expected template charge \(S_{i,j}\) to determine the likely bin \(j\) where the particle crossed the sensor. This is achieved by minimizing the \(\chi^2\) function:
@@ -96,7 +96,7 @@ The reconstruction algorithm is validated on PIXELAV simulation samples used to 
 \subsubsection{Generic Errors}
 
 Description: used in the generic CPE (cluster position estimation) algorithm as errors. Improves irradiation bias corrections (IBC) for data.
-Record Name:  \texttt{SiPixelGenErrorDBObjectRcd}
+Record Name:  \texttt{SiPixelGenErrorDBObjectRcd}.
 
 \subsubsection{Pixel Alignment}
 Records used: 
@@ -105,7 +105,7 @@ Records used:
 \item \texttt{TrackerSurfaceDeformationRcd} (for surface deformation)  \item \texttt{GlobalPositonRcd} (defining the relative position of the subdetectors) 
 \end{itemize}
 
-Tracker alignment is tightly coupled with CPE conditions to mitigate Lorentz Angle miscalibrations. High-granularity offline PCL helps optimize biases but is prone to weak modes.
+Tracker alignment is tightly coupled with CPE conditions to mitigate Lorentz Angle miscalibrations \cite{CMS:2022ali}. High-granularity offline PCL helps optimize biases but is prone to weak modes.
 HLT reconstruction uses the Pixel CPE Fast algorithm (a variant of the generic algorithm), while offline operations rely on Pixel Template reconstruction. Discrepancies between these algorithms necessitate customized alignment procedures.
 
 \begin{figure}[htbp]
