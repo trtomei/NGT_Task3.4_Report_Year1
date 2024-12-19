@@ -166,14 +166,14 @@ This is comparable in magnitude, albeit smaller, to the 51\,GB/s quoted for the 
 
 In the context of a NGT demonstrator for \Runthree, there are three hardware options that are considered:
 \begin{itemize}
-\item 1 machine: [RU/BU/FU & SSD] (built data)
-\item 2 machines: 
+    \item 1 machine: $[\texttt{RU/BU}/\texttt{FU}$ \& $\texttt{SSD}]$ (built data)
+    \item 2 machines: 
     \begin{itemize}
-    \item [RU/BU & SSD] + FU (unbuilt data)
-    \item RU/BU + [FU & SSD] (built data)
+        \item $[\texttt{RU/BU}$ \& $\texttt{SSD}] + \texttt{FU}$ (unbuilt data)
+        \item $\texttt{RU/BU} + [\texttt{FU}$ \& $\texttt{SSD}]$ (built data)
     \end{itemize}
 \end{itemize}
-where SSD refers to the buffer medium.
+where \texttt{SSD} refers to the buffer medium.
 
 The prototype choice should preferably be as close as possible to the Phase 2 DAQ infrastructure (discussed above in Section \ref{sec:DAQP2}), which is also dependent on the requirements of the NGT calibration workflow. However, for demonstration purposes of the full workflow, this is not strictly a requirement and one should consider the trade-off with simplicity in integrating it within the current \texttt{DAQ3} system. On thing to note is that whether to buffer built or unbuilt data is a secondary consideration, as with a single buffering node the data-loss is equivalent. Ultimately, one could consider more than one of the prototype options.
 
