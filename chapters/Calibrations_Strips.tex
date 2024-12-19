@@ -109,7 +109,7 @@ This has to be ensured because bad components might be recovered from one run to
 Therefore, a \texttt{AlCaReco} (see Section~\ref{sec:CMScalibration}) stream dedicated to the bad component identification in the strip tracker was introduced in the \texttt{AlCaReco} workflow. It is called \texttt{ALCARECOSiStripCalZeroBias} and has the following properties:
 \begin{itemize}
 \item  The input is the digitized output from standard reconstruction since it is independent from bad channel masking. The reconstruction is performed up to cluster (so only the digi to cluster step is performed in the \texttt{AlCaReco}).
-\item Only bad components from cabling and o2o are taken into account during reconstruction. Bad components from offline analysis are not considered.
+\item Only bad components from cabling and O2O are taken into account during reconstruction. Bad components from offline analysis are not considered.
 \item Only events with random trigger are selected. For collision data the HLT path \texttt{HLT\_ZeroBias} and for cosmic data the \texttt{HLT\_Random} is chosen.
 \item The output of the stream contains only the cluster collection and the \texttt{L1AcceptBunchCrossings} collection (needed by the filters against the APV25 readout chip \cite{French:2001xb} induced noise). This can be used as starting point in case the calibration has to be redone.
 \item The DQM output contains one cluster occupancy histogram per strip detector. These histograms are used as input for the bad component algorithms. In addition, the \texttt{ClusterVsAPVCycle} and the \texttt{TotalNumberOfCluster} histograms are stored for each subdetector. 
@@ -125,6 +125,22 @@ Once the DQM output of a given run with enough statistics is available from the 
 \end{figure}
 
 \subsubsection{APV Gains}
+The total charge of a strip cluster in the CMS detector is calculated by summing the contributions from each individual strip in the cluster. For each strip, the raw ADC counts are corrected using two gain factors, \(\text{G1}_i\) and \(\text{G2}_i\), which are specific to the strip. The charge for the entire cluster is then obtained by the following formula:
+
+\[
+Q_{\text{cluster}} = \sum_{i=1}^{N} \frac{\text{ADC}_i}{\text{G1}_i \times \text{G2}_i}
+\]
+
+Where:
+\begin{itemize}
+    \item \( Q_{\text{cluster}} \) is the total charge of the cluster.
+    \item \( N \) is the number of strips in the cluster.
+    \item \( \text{ADC}_i \) is the ADC count for the \( i \)-th strip.
+    \item \( \text{G1}_i \) is the first gain factor for the \( i \)-th strip.
+    \item \( \text{G2}_i \) is the second gain factor for the \( i \)-th strip.
+\end{itemize}
+
+The ADC count for each strip represents the raw signal from the detector. The gain factors \(\text{G1}_i\) and \(\text{G2}_i\) are applied to convert the ADC counts into the corresponding physical charge. These gains may vary across strips due to differences in calibration and detector characteristics.
 The gain calibration is performed in two sequential steps, each one delivering a
 calibration factor. These steps, referred as the calibration sequence, are:
 

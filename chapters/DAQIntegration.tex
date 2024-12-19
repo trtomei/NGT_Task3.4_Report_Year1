@@ -1,22 +1,22 @@
 %!TEX root = ../main.tex
-\chapter{NGT--DAQ Integration} % Thiago
+\chapter{NGT--DAQ Integration} \label{sec:NGT-DAQintegration}
+% Thiago 
 
 %%% We just write the discussion we had in the whole DAQ session
 
-The Optimal Calibration system has to be embedded in the CMS trigger and data acquisition (DAQ) system,
-both in the demonstrator system and in the \Phasetwo implementation.
-We briefly review the DAQ system architecture implemented for \Runthree, 
-compare it to the baseline DAQ architecture proposed for \Phasetwo, and 
-go through a preliminary calculation of the NGT system feasibility.
-We finally discuss a minimal implementation of the demonstrator and
-how it can be integrated in the \Runthree system.
+The Optimal Calibrations system has to be embedded in the CMS trigger and data acquisition (DAQ) system,
+both in the demonstrator system and in the \Phasetwo implementation. We briefly review the DAQ system architecture implemented for \Runthree, compare it to the baseline DAQ architecture proposed for \Phasetwo, and go through a preliminary calculation of the NGT system feasibility. We finally discuss the options for a demonstrator, including a minimal implementation and how it can be integrated in the \Runthree system.
 
 \section{Demonstrator Integration in Run 3}
 
 The CMS DAQ system for Run 3 (DAQ3) is an intricate system, dealing with all steps of the data flow from the sub-detector front-end drivers (FEDs) through the final delivery of data streams to Tier-0. For the purposes of our discussions, we can focus on the following elements of Figure~\ref{fig:DAQ3}: 
-the \emph{Readout Units} (RUs) unpack and merge event fragments into super-fragments, which are then sent to the \emph{Builder Units} (BUs) to be further assembled into complete events. 
-The complete events are sent to the \emph{Filter Units} (FUs), where the HLT application runs and selects a subset of the events to be saved for permanent storage. 
-In the DAQ3 implementation, the RUs and the BUs are logically separate, but physically realised in the same computer node.
+\begin{itemize}
+    \item The \emph{Readout Units} (RUs) unpack and merge event fragments into super-fragments.
+    \item These are then sent to the \emph{Builder Units} (BUs) to be further assembled into complete events.
+    \item The complete events are sent to the \emph{Filter Units} (FUs), where the HLT application runs and selects a subset of the events to be saved for permanent storage. 
+\end{itemize}
+
+In the DAQ3 implementation, the RUs and the BUs are logically separate, but physically realised in the same computer node (RU/BU).
 \begin{figure}[htbp]
    \centering
 	\includegraphics[width=0.7\textwidth]{figures/DAQRun3.pdf}
@@ -25,10 +25,8 @@ In the DAQ3 implementation, the RUs and the BUs are logically separate, but phys
 \end{figure}
 
 The output data are then sent back to the BUs, where they are further merged and their management is handed over to the storage and transfer system (STS).
-The STS  transfers the data to a (Lustre-based) cluster file system, whence they are finally sent to their final destination:
-Tier-0,
-DQM
-or the calibration cluster.
+The STS  transfers the data to a cluster file system (Lustre-based), whence they are finally sent to their final destination:Tier-0, DQM or the calibration cluster.
+
 The DAQ3 was also designed with two characteristics that the demonstrator should respect: 
 i) it is \emph{pipelined}, so the data should follow an unidirectional flow;
 ii) it is \emph{democratic}, in the sense that all elements (RUs, BUs, FUs) are treated equally.
@@ -46,7 +44,7 @@ This makes the necessity of a demonstrator system even more pressing.
 
 \begin{figure}[htbp]
    \centering
-	\includegraphics[width=0.7\textwidth]{figures/Phase2-Layout-1-20210913.pdf}
+	\includegraphics[width=0.8\textwidth]{figures/Phase2-Layout-1-20210913.pdf}
   \caption{Baseline architecture of the \Phasetwo DAQ system.}
    \label{fig:DAQP2}
 \end{figure}
@@ -108,7 +106,7 @@ Following the Run 3 historic performance, we assume that the 17 hours of stable 
 \end{itemize}
 \end{itemize}
 
-By simply substituting $\tau$ = 12 hours in Eq.~\ref{eq:buffersize}, we arrive at a buffer size $B = 200\PB$.
+By simply substituting $\tau$ = 12 hours in Eq.~\ref{eq:buffersize}, we arrive at a buffer size $B \approx 200\PB$.
 The second calculation that accounts for the LHC duty cycle amounts to three applications of the same equation,
 and is summarised in Table~\ref{tab:bufferWithDutyCycle}. In that case, we arrive at a buffer size of $B = 258\PB$ for a 24 hour period.
 Noting that the two results agree within $\sim25\%$, and that many more assumptions go into the second calculation, for the purposes of this report we proceed with the \textbf{200\,PB} figure.
