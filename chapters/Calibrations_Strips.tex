@@ -1,10 +1,10 @@
 \subsection{Strip Tracker Calibrations}
 
-The silicon strip tracker (SST) of the CMS experimen is the largest
-detector of its kind with an active area of 200 $m^{2}$ of silicon \cite{Karimaki:368412,CERN-LHCC-2000-016,Adam_2021}. The SST detects charge deposits (hits) at discrete points along the paths of charged particles arising from the collisions produced by the LHC. These hits, together with those detected in the CMS pixel detector, are used to reconstruct the trajectories of charged particles traversing the detector, thus the SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process.\\
+The silicon strip tracker (SST) of the CMS experiment is the largest detector of its kind in the world, with an active area of 200 $m^{2}$ of silicon \cite{Karimaki:368412,CERN-LHCC-2000-016,Adam_2021}.\\
+The SST detects charge deposits (hits) at discrete points along the paths of charged particles arising from the collisions produced by the LHC. These hits, together with those detected in the CMS pixel detector (described in Section \ref{sec:PixelCalib}), are used to reconstruct the trajectories of charged particles traversing the detector, thus the SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process.\\
 The calibration of its parameters, particularly for tracking and reconstruction, is vital for maintaining performance and ensuring robust data acquisition. This section summarizes the key prospects and current practices for optimizing SiStrip calibrations at HLT.\newline \newline
 This part of the report delves into the calibration prospects of the SiStrip detector.\\
-Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tracker, of which 21 are relevant to Run 3 data-taking. From these, 4 are considered core and critical for data-taking:
+Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tracker, of which 21 are relevant to Run 3 data-taking. 
 
 \begin{table}[h!]
     \centering
@@ -79,8 +79,8 @@ The hit position uncertainty is usually parametrized based on the expected clust
     \item This broadening is caused by capacitive coupling between strips or energetic delta rays.
 \end{itemize}
 
-\subsubsection{DAQ O2O conditions}
- The Strip DAQ O2O populates tracker conditions from the online master data storage (OMDS) to the offline reconstruction conditions database (ORCON). 
+\subsubsection{DAQ O2O Conditions}
+The Strip Data Acquisition (DAQ) \emph{Offline-to-Online} (O2O) (discussed in Section \ref{sec:CMScalibration}) populates tracker conditions from the online master data storage (\texttt{OMDS}) to the offline reconstruction conditions database (\texttt{ORCON}). 
 Six types of payloads are populated in this O2O: 
 \begin{itemize}
 \item \texttt{SiStripBadStrip} 	
@@ -91,21 +91,24 @@ Six types of payloads are populated in this O2O:
 \item \texttt{SiStripThreshold}
 \end{itemize}
 
-\subsubsection{DCS O2O conditions}
- The Strip DCS O2O (discussed in Section \ref{sec:CMScalibration}) populates tracker Hight Voltage / Low Voltage information from PVSS database to the offline condition database (\texttt{ORCON}). This DCS info is used in prompt reconstruction. Modules that are OFF are retrieved form the PVSS database and stored in the condition database via hourly cron jobs. Three cron jobs are set up for the DCS O2O, including one production job and two validation jobs, each write to a different tag in the condition database with a different delay in time: 
+These records hold conditions including information about the detector's configuration during data-taking, such as cabling, module connections, and control parameters. The O2O framework facilitates the synchronization of online settings with offline processing, enabling accurate interpretation of the data. This ensures that the conditions under which the detector operated, including potential changes in configuration or performance during data-taking, are faithfully reproduced in offline analyses, maintaining the integrity and quality of the physics results.
+
+\subsubsection{DCS O2O Conditions}
+The record \texttt{SiStripDetVOffRcd} is designed to hold information coming from the Strip Detector Control System (DCS) O2O (discussed in Section \ref{sec:CMScalibration}).\\ This workflow populates the Strip tracker High Voltage / Low Voltage information from PVSS online database to the offline condition database (\texttt{ORCON}, see Fig.~\ref{fig:CondDB}). The DCS information is used in prompt reconstruction but currently not in the HLT, thus the payload used in the HLT reconstruction is empty (all channels are marked as fully powered).\\
+Modules that are OFF are retrieved form the PVSS database and stored in the condition database via hourly cron jobs. Three cron jobs are set up for the DCS O2O, including one production job and two validation jobs, each write to a different tag in the condition database with a different delay in time: 
 \begin{itemize}
 \item 1 hour Delay Validation: populates HV/LV states until 1 hour before the cron job execution;
 \item 13 hours Delay Validation: populates HV/LV states until 13 hour before the cron job execution;
-\item 25 hourse Delay Validation: populates HV/LV states until 25 hours before the cron job execution. Also synchronized to the tag used in production for prompt reco;
+\item 25 hours Delay Validation: populates HV/LV states until 25 hours before the cron job execution. Also synchronized to the tag used in production for prompt reconstruction;
 \end{itemize}
 
 \subsubsection{Bad Components}
-
-For the identification of bad components dedicated to a given run it is important that the analysis is based on data which do not take into account the knowledge of bad components identified during the offline analysis of previous runs. This has to be ensured because bad components might be recovered from one run to another so that they have to be qualified unbiased afterwards. Since the reconstruction chain used to produce the usual tracker AlCaReco streams already includes bad components from offline analysis, these streams cannot be used here.
+For the identification of bad components dedicated to a given run it is important that the analysis is based on data which do not take into account the knowledge of bad components identified during the offline analysis of previous runs.\\
+This has to be ensured because bad components might be recovered from one run to another so that they have to be qualified unbiased afterwards. Since the reconstruction chain used to produce the usual tracker \texttt{AlCaReco} streams already includes bad components from offline analysis, these streams cannot be used here.
 
 Therefore, a \texttt{AlCaReco} stream dedicated to the bad component identification in the strip tracker was introduced in the \texttt{AlCaReco} workflow. It is called \texttt{ALCARECOSiStripCalZeroBias} and has the following properties:
 \begin{itemize}
-\item  The input is the digitized output from standard reconstruction since it is independent from bad channel masking. The reconstruction is performed up to cluster (so only the digi to cluster step is performed in the AlCaReco).
+\item  The input is the digitized output from standard reconstruction since it is independent from bad channel masking. The reconstruction is performed up to cluster (so only the digi to cluster step is performed in the \texttt{AlCaReco}).
 \item Only bad components from cabling and o2o are taken into account during reconstruction. Bad components from offline analysis are not considered.
 \item Only events with random trigger are selected. For collision data the HLT path \texttt{HLT\_ZeroBias} and for cosmic data the \texttt{HLT\_Random} is chosen.
 \item The output of the stream contains only the cluster collection and the \texttt{L1AcceptBunchCrossings} collection (needed by the filters against the APV25 readout chip induced noise). This can be used as starting point in case the calibration has to be redone.
@@ -121,7 +124,7 @@ Once the DQM output of a given run with enough statistics is available from the 
    \label{fig:fill10200PCL}
 \end{figure}
 
-\subsubsection{APV gains}
+\subsubsection{APV Gains}
 The gain calibration is performed in two sequential steps, each one delivering a
 calibration factor. These steps, referred as the calibration sequence, are:
 
@@ -143,7 +146,7 @@ Fig.~\ref{fig:StripClusterCharge} shows the time evolution of the calibrated SiS
    \label{fig:StripClusterCharge}
 \end{figure}
 
-\subsubsection{CPE conditions}
+\subsubsection{CPE Conditions}
 
 \begin{itemize}
     \item Two key CPE-related conditions are maintained:\newline
@@ -154,7 +157,9 @@ Fig.~\ref{fig:StripClusterCharge} shows the time evolution of the calibrated SiS
     \item A monitoring workflow exists in the Prompt Calibration Loop (PCL), but direct calibration at HLT is limited.
 \end{itemize}
 
-\subsubsection*{Future Prospects and Integration in NGT Demonstrator Workflow}
+\subsubsection{NGT Demonstrator Candidate Evaluation}
+
+To summarise the main NGT calibration workflow candidates:
 \begin{itemize}
     \item \textbf{Bad Components Masking}:
     \begin{itemize}
@@ -168,7 +173,7 @@ Fig.~\ref{fig:StripClusterCharge} shows the time evolution of the calibrated SiS
     \end{itemize}
 \end{itemize}
 
-\subsubsection*{Recommendations}
+The recommendations in the context of the NGT calibration workflow are:
 \begin{itemize}
     \item Prioritize the inclusion of bad components masking in the NGT demonstrator workflow due to its operational simplicity and demonstrated impact.
     \item Consider periodic evaluations for integrating gain calibrations as part of long-term upgrades.

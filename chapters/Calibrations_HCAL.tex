@@ -74,8 +74,7 @@ The HCAL pedestals (\texttt{HcalPedestals}) and their corresponding widths (\tex
 
 Generally, they are updated roughly every week ($\approx 2 \fbinv$), as part of the HCAL automation workflow (discussed in Section \ref{sec:CMScalibration}). Effective pedestals are calculated from collision runs, where good input data from candidate runs is identified and processed within 1 hour after a given LHC fill. The input data is based on measurements in orbit/abort gap when there is no beam in the LHC (similarly to the laser data for the HCAL gains discussed in the previous Section \ref{sec:HCAL_gains}). The conditions are then automatically uploaded to the conditions database via the O2O procedure. Validation in the context of changes to L1T and HLT trigger rates are produced within 2 hours, with an ultimate validation and green-light from AlCa typically after 1-2 days. Given a successful validation, this is followed by deployment at the subsequent LHC interfill period.
 
-\subsubsection{Others}
-
+\subsubsection{Other Calibrations}
 There are several other critical conditions listed in Table \ref{tab:HCALCalibrations_critical}, which have been deemed unsuitable for the NGT calibration workflow. Therefore, they are briefly discussed in the following section with lesser details.
 
 \begin{itemize}
@@ -87,8 +86,7 @@ There are several other critical conditions listed in Table \ref{tab:HCALCalibra
 
 One important thing to note is that there exist fundamental HCAL conditions or calibrations which can have a significant effect on HLT reconstruction that are implemented in the hardware directly,  while their conditions database records may not be considered critical per se (but rather used for bookkeeping purposes); Examples include the aforementioned zero-suppression thresholds, \texttt{HcalZSThresholds}) or the timing alignment.
 
-\subsubsection{Recommendations}
-
+\subsubsection{NGT Demonstrator Candidate Evaluation}
 In the context of a potential candidates for the optimal NGT calibrations:
 \begin{itemize}
     \item The response corrections involve a number of dedicated separate offline analyses for different HCAL subsystems, using various input datasets (incl. \texttt{AlCaRecos}) and specific selections. Thus, their determination is rather convoluted and they are tricky to do without proper offline analysis and corresponding validation. Even though some of the sub-calibrations might be reasonably possible to automate (e.g. $Z \rightarrow ee$ for HF), it would still require a significant amount of work, especially in the context of proper validation. Furthermore, since they are incorporated into the LUTs, they are entangled together with L1T condition updates. Therefore, one can conclude that the response corrections are not a viable candidate for the NGT workflow in their current form, especially for the Run 3 prototype.
