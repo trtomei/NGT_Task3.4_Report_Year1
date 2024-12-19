@@ -27,8 +27,6 @@ This report is structured as follows:
     \item In Chapter~\ref{sec:conclusions_and_outlook} we provide a conclusion and an outlook from the first year of our task.
 \end{itemize}
 
-%%% Thiago reviewed until here.
-
 \section{CMS Calibration Workflows}\label{sec:CMScalibration}
 The CMS detector is composed of various sub-detectors, each with specific tasks and functionalities~\cite{CMS:2008xjf,CMS:2023gfb}.
 This makes data acquisition a highly intricate task. Fully reconstructing events measured by the detector requires precise knowledge of the detector conditions at the time of data taking. Numerous factors are to be considered frequently, such as: What is the energy response of a given scintillator in the calorimeters? What are the efficiencies of individual pixels within the tracker? Is the geometry of the subdetector components the same as when it was initially aligned?
@@ -62,7 +60,6 @@ It takes the Prompt reconstruction datasets as input and makes use of the accumu
 
 
 \section{The CMS Conditions Database} \label{sec:CMS_CondDB}
-
 The CMS condition database (\texttt{CondDB}) is a specialised database system used to store and manage the non event data required for detector operations, simulation, and data analysis. With conditions data we mean non-event data resulting mainly from calibrations and alignment algorithms.
 
 \begin{figure}[h!]	
@@ -81,12 +78,11 @@ Validity} (IOV). It is organised into \emph{Tags} and \emph{Global Tags}.
 \item A \emph{Tag} is a fully qualified set of conditions consisting of
 \emph{Payloads} and their associate IOVs. They should cover the time span required by the workload.
 \item In \texttt{CMSSW}, a special C++ class (the \emph{Record}) acts as entry point for a \emph{Payload} by importing database content on the \texttt{cmsRun} executable. Every processing workflow consumes a specific set of \emph{Records}.
-\item A \emph{Global Tag} (often abbreviated GT in the following) is a set of (\emph{Record}, \emph{Tag}) pairs needed by a particular processing workflow (online data-taking, MC, re-processing). This is the final ``product'', typically consumed by CMS users.
+\item A \emph{Global Tag} (often abbreviated GT in the following) is a set of (\emph{Record}, \emph{Tag}) pairs needed by a particular processing workflow (online data-taking, MC, re-processing). This is the final ``product'', typically consumed by CMS software, especially the HLT.
 \end{itemize}
 
-There are currently 326 conditions (records/tags) in the latest HLT Global Tag (\texttt{140X\_dataRun3\_HLT\_v3}) used during LHC \Runthree pp data taking in 2024.
-The authors of this report conducted a survey among the CMS Detector Performance Groups to evaluate the Global Tag's content, focusing on the types of workflows used to populate these conditions and the criticality of their updates.
-A copy of the survey is available in\\
+There are currently 326 conditions (records/tags) in the latest HLT GT (\texttt{140X\_dataRun3\_HLT\_v3}) used during LHC \Runthree pp data taking in 2024.
+The authors of this report conducted a survey among the CMS Detector Performance Groups (DPGs) to evaluate the GT's content, focusing on the types of workflows used to populate these conditions and the criticality of their updates. A copy of the survey is available in\\
 \url{https://cern.ch/ngt-cms-optimalcalibrations-survey2024}.
 
 % NOTE: Introduce prompt/offline?
