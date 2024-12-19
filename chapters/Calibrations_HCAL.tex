@@ -58,7 +58,7 @@ The \textit{gains} (or \texttt{RadDam}) calibrations (\texttt{HcalGains}) are re
 
 Typically, the measurements of the radiation damage is based on laser data in the orbit/abort gap, when there is no beam in the LHC. The laser system sends light to the photodetectors (SiPMs, PMTs) or directly to the scintillators. The ratio of the amplitudes gives a measure of the signal attenuation. The laser data is then compared to that taken at the start of the yearly data-taking in order to measure the net effects of radiation damage. A new dedicated radiation damage monitoring system was recently developed for the HF quartz fibres. 
 
-The effects of radiation damage are dependent on the delivered luminosity. The dependence is modelled and parametrised to exponential decay \cite{CMS-PRF-18-003}. An example of the relative laser signal in a single $i\eta$ region and layer is shown in Figure \ref{fig:ECAL-Laser_data}. 
+The effects of radiation damage are dependent on the delivered luminosity. The dependence is modelled and parametrised to exponential decay \cite{CMS-PRF-18-003}. An example of the relative laser signal in a single $i\eta$ region and layer is shown in Figure \ref{fig:HCAL-Laser_data}. 
 
 \begin{figure}[h!]	
 \centering
@@ -67,7 +67,7 @@ The effects of radiation damage are dependent on the delivered luminosity. The d
 \label{fig:HCAL-Laser_data}
 \end{figure}
 
-In the case of downtime of the laser system (also seen in Figure \ref{fig:ECAL-Laser_data} for 2024), the backup approach are dedicated energy flow extrapolations, which are non-trivial. Therefore, the preference is to use laser data.
+In the case of downtime of the laser system (also seen in Figure \ref{fig:HCAL-Laser_data} for 2024), the backup approach are dedicated energy flow extrapolations, which are non-trivial. Therefore, the preference is to use laser data.
 
 \subsubsection{Pedestals}\label{sec:HCAL_pedestals}
 The HCAL pedestals (\texttt{HcalPedestals}) and their corresponding widths (\texttt{HcalPedestalWidths}) are essentially measurements of the noise "floor" that are offset to avoid any energy measurement bias. Some sources of noise include dark and leakage currents, or particles interacting with the readout electronics. Generally, it increases with radiation damage. Regular pedestal updates are important to avoid any drifting of HCAL-driven trigger rates and contributions to the fraction of the energy deposited in the HCAL and ECAL, $\frac{H}{E}$, which is an observable used in the identification of electrons and photons, including shower shapes and isolation. The pedestals are also important inputs into other calibrations, such as the response corrections.
@@ -84,13 +84,13 @@ There are several other critical conditions listed in Table \ref{tab:HCALCalibra
     \item \textbf{Geometry Parameters} (\texttt{HcalParameters}): contain details on the HCAL geometry. They are updated rather rarely, on a yearly basis, and thus need not frequent online updates as foreseen within an NGT calibration workflow.
 \end{itemize}
 
-One important thing to note is that there exist fundamental HCAL conditions or calibrations which can have a significant effect on HLT reconstruction that are implemented in the hardware directly,  while their conditions database records may not be considered critical per se (but rather used for bookkeeping purposes); Examples include the aforementioned zero-suppression thresholds, \texttt{HcalZSThresholds}) or the timing alignment.
+One important thing to note is that there exist fundamental HCAL conditions or calibrations which can have a significant effect on HLT reconstruction that are implemented in the hardware directly,  while their conditions database records may not be considered critical per se (but rather used for bookkeeping purposes); Examples include the aforementioned zero-suppression thresholds (\texttt{HcalZSThresholds}) or the timing alignment.
 
 \subsubsection{NGT Demonstrator Candidate Evaluation}
 In the context of a potential candidates for the optimal NGT calibrations:
 \begin{itemize}
     \item The response corrections involve a number of dedicated separate offline analyses for different HCAL subsystems, using various input datasets (incl. \texttt{AlCaRecos}) and specific selections. Thus, their determination is rather convoluted and they are tricky to do without proper offline analysis and corresponding validation. Even though some of the sub-calibrations might be reasonably possible to automate (e.g. $Z \rightarrow ee$ for HF), it would still require a significant amount of work, especially in the context of proper validation. Furthermore, since they are incorporated into the LUTs, they are entangled together with L1T condition updates. Therefore, one can conclude that the response corrections are not a viable candidate for the NGT workflow in their current form, especially for the Run 3 prototype.
-    \item The gains or \texttt{RadDam} corrections are important for HLT reconstruction and require frequent updates. There are plans to include them in the HCAL automation system (covered in more details the next Section \ref{sec:HCAL_pedestals}) within weekly updates. Therefore, they are a good candidate for the NGT workflow. One caveat is that they are dependent on laser data, which requires a different data stream than the standard bulk collisions data. Furthermore, a vital requirement is a well-functioning laser system.
+    \item The gains (or \texttt{RadDam}) corrections are important for HLT reconstruction and require frequent updates. There are plans to include them in the HCAL automation system (covered in more details the next Section \ref{sec:HCAL_pedestals}) within weekly updates. Therefore, they are a good candidate for the NGT workflow. One caveat is that they are dependent on laser data, which requires a different data stream than the standard bulk collisions data. Furthermore, a vital requirement is a well-functioning laser system.
     \item The pedestals are critical inputs. They are included in the HCAL automation system within weekly updates, which automatically make them a good candidate for the NGT workflow. One caveat is that they are dependent on orbit/abort gap data, which requires a different data stream than the standard bulk collisions data.
 \end{itemize}
 

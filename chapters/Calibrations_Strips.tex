@@ -29,7 +29,7 @@ Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tra
       Online Configuration       & \parbox[t]{5cm}{\texttt{SiStripConfObjectRcd,}\\\texttt{apvphaseoffset}}  &   Manual   & no update                               &  \\ \hline
       Dead channels              & \texttt{SiStripDetVOffRcd}              &   Manual                                & no update                               & List of Unpowered modules  \\ \hline
       Lorentz Angle              & \parbox[t]{5cm}{\texttt{SiStripLorentzAngleRcd,}\\\texttt{deconvolution}} &   Manual & no update & Hall mobility per unit magnetic field  \\ \hline
-      Lorentz Angle              & \parbox[t]{5cm}{\texttt{SiStripLorentzAngleRcd,}\\\texttt{deconvolution}} &   Manual & no update & Hall mobility per unit magnetic field  \\ \hline
+      Lorentz Angle              & \parbox[t]{5cm}{\texttt{SiStripLorentzAngleRcd,}\\\texttt{deconvolution}} &   Manual & no update & Hall mobility per unit magnetic field  \\
     \end{tabular}
     \end{adjustbox}
     \caption{Fundamental SiStrip Calibrations, ordered in terms of frequency of updates.}
@@ -94,7 +94,7 @@ Six types of payloads are populated in this O2O:
 These records hold conditions including information about the detector's configuration during data-taking, such as cabling, module connections, and control parameters. The O2O framework facilitates the synchronization of online settings with offline processing, enabling accurate interpretation of the data. This ensures that the conditions under which the detector operated, including potential changes in configuration or performance during data-taking, are faithfully reproduced in offline analyses, maintaining the integrity and quality of the physics results.
 
 \subsubsection{DCS O2O Conditions}
-The record \texttt{SiStripDetVOffRcd} is designed to hold information coming from the Strip Detector Control System (DCS) O2O (discussed in Section \ref{sec:CMScalibration}).\\ This workflow populates the Strip tracker High Voltage / Low Voltage information from PVSS online database to the offline condition database (\texttt{ORCON}, see Fig.~\ref{fig:CondDB}). The DCS information is used in prompt reconstruction but currently not in the HLT, thus the payload used in the HLT reconstruction is empty (all channels are marked as fully powered).\\
+The record \texttt{SiStripDetVOffRcd} is designed to hold information coming from the Strip Detector Control System (DCS) O2O (discussed in Section \ref{sec:CMScalibration}).\\ This workflow populates the Strip tracker High Voltage (HV) / Low Voltage (LV) information from PVSS online database to the offline condition database (\texttt{ORCON}, see Fig.~\ref{fig:CondDB}). The DCS information is used in prompt reconstruction but currently not in the HLT, thus the payload used in the HLT reconstruction is empty (all channels are marked as fully powered).\\
 Modules that are OFF are retrieved form the PVSS database and stored in the condition database via hourly cron jobs. Three cron jobs are set up for the DCS O2O, including one production job and two validation jobs, each write to a different tag in the condition database with a different delay in time: 
 \begin{itemize}
 \item 1 hour Delay Validation: populates HV/LV states until 1 hour before the cron job execution;
@@ -106,22 +106,22 @@ Modules that are OFF are retrieved form the PVSS database and stored in the cond
 For the identification of bad components dedicated to a given run it is important that the analysis is based on data which do not take into account the knowledge of bad components identified during the offline analysis of previous runs.\\
 This has to be ensured because bad components might be recovered from one run to another so that they have to be qualified unbiased afterwards. Since the reconstruction chain used to produce the usual tracker \texttt{AlCaReco} streams already includes bad components from offline analysis, these streams cannot be used here.
 
-Therefore, a \texttt{AlCaReco} stream dedicated to the bad component identification in the strip tracker was introduced in the \texttt{AlCaReco} workflow. It is called \texttt{ALCARECOSiStripCalZeroBias} and has the following properties:
+Therefore, a \texttt{AlCaReco} (see Section~\ref{sec:CMScalibration}) stream dedicated to the bad component identification in the strip tracker was introduced in the \texttt{AlCaReco} workflow. It is called \texttt{ALCARECOSiStripCalZeroBias} and has the following properties:
 \begin{itemize}
 \item  The input is the digitized output from standard reconstruction since it is independent from bad channel masking. The reconstruction is performed up to cluster (so only the digi to cluster step is performed in the \texttt{AlCaReco}).
 \item Only bad components from cabling and o2o are taken into account during reconstruction. Bad components from offline analysis are not considered.
 \item Only events with random trigger are selected. For collision data the HLT path \texttt{HLT\_ZeroBias} and for cosmic data the \texttt{HLT\_Random} is chosen.
-\item The output of the stream contains only the cluster collection and the \texttt{L1AcceptBunchCrossings} collection (needed by the filters against the APV25 readout chip induced noise). This can be used as starting point in case the calibration has to be redone.
+\item The output of the stream contains only the cluster collection and the \texttt{L1AcceptBunchCrossings} collection (needed by the filters against the APV25 readout chip \cite{French:2001xb} induced noise). This can be used as starting point in case the calibration has to be redone.
 \item The DQM output contains one cluster occupancy histogram per strip detector. These histograms are used as input for the bad component algorithms. In addition, the \texttt{ClusterVsAPVCycle} and the \texttt{TotalNumberOfCluster} histograms are stored for each subdetector. 
 \end{itemize}
 
-Once the DQM output of a given run with enough statistics is available from the central DQM harvesting, the bad component identification can be performed.\\ Fig.~\ref{fig:fill10200PCL} shows schematically the workflow for the Strip bad components identification.
+Once the DQM output of a given run with enough statistics is available from the central DQM harvesting, the bad component identification can be performed.\\ Fig.~\ref{fig:fill10200PCL_0} shows schematically the workflow for the Strip bad components identification.
 
 \begin{figure}[htbp]
    \centering
 	\includegraphics[width=0.7\textwidth]{figures/BadComponentWorkflow_small.png}
    \caption{The workflow for the Strip Bad Component Identification is shown in the sketch above.}
-   \label{fig:fill10200PCL}
+   \label{fig:fill10200PCL_0}
 \end{figure}
 
 \subsubsection{APV Gains}
