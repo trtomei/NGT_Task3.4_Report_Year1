@@ -34,6 +34,11 @@
 %% Add newly defined newly defined commands.
 \input{new_commands}
 
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{5.2} % Adjust scale as needed
+\SetWatermarkColor[gray]{0.9} % Adjust transparency (1=opaque, 0=transparent)
+
 % Custom configuration for code appearance
 \lstset{
     basicstyle=\ttfamily\footnotesize,  % Basic font settings
@@ -54,7 +59,20 @@
 \newcolumntype{Z}{>{\ttfamily\raggedright\hspace{0pt}}p{0.6\textwidth}}
 
 % Prepare content for the title page
-\author{Marco Musich, Jessica Prendi, Thiago Tomei, Mateusz Zarucki,\\on behalf of the CMS Collaboration.}
+%\author{Marco Musich, Jessica Prendi, Thiago Tomei, Mateusz Zarucki,\\on behalf of the CMS Collaboration.}
+
+\usepackage{authblk}
+\author[1]{Marco Musich}
+\author[2]{Jessica Prendi}
+\author[3]{Thiago Tomei}
+\author[4]{Mateusz Zarucki}
+\author[ ]{on behalf of the CMS Collaboration}
+
+\affil[1]{Universit\`a di Pisa and INFN}
+\affil[2]{ETH Zürich and CERN}
+\affil[3]{}
+\affil[4]{CERN}
+
 \title{Optimal HLT Calibrations}
 \subtitle{NGT Task 3.4 2024 Report}
 

@@ -53,9 +53,6 @@ For HO, the intercalibration makes use of muons from collision data, as well as 
 
 The Zero-Degree Calorimeter (ZDC) calibrations are also mostly unchanged and are not discussed here further. 
 
-% NGT candidate assessment
-In the context of a potential candidate for the optimal NGT calibrations, it is clear that the response corrections involve a number of dedicated separate offline analyses for different HCAL subsystems, using various input datasets (incl. \texttt{AlCaRecos}) and specific selections. Thus, their determination is rather convoluted and they are tricky to do without proper offline analysis and corresponding validation. Even though some of the sub-calibrations might be reasonably possible to automate (e.g. $Z \rightarrow ee$ for HF), it would still require a significant amount of work, especially in the context of proper validation. Furthermore, since they are incorporated into the LUTs, they are entangled together with L1T condition updates. Therefore, one can conclude that the response corrections are not a viable candidate for the NGT workflow in their current form, especially for the Run 3 prototype.
-
 \subsubsection{Gains (RadDam)}\label{sec:HCAL_gains}
 The \textit{gains} (or \texttt{RadDam}) calibrations (\texttt{HcalGains}) are responsible for correcting for radiation damage in the HCAL. Generally this leads to a decreased signal due to the darkening of active scintillator material and fibres (similar to the ECAL laser corrections covered in Section \ref{sec:ECALlaser}). Conversely, the recovery process of thermal annealing also effects the signal and needs to be corrected for. Due to the increased radiation in the forward region, primarily HE and HF are corrected. These corrections are especially important in the high $|i\eta|$ regions where there is no tracker coverage and the \texttt{IsoTrack} response corrections are less accurate and cannot cover for these differences. Therefore, they can be considered critical especially for those regions. HB and HO have not been corrected for a long time due to lower radiation damage. The corrections are determined $|i\eta|$- and depth-dependent and $|i\phi|$-independent) yielding a multiplicative factor together with the response corrections for final calibrated response in GeV. Generally, they are updated via the O2O procedure semi-automatically (as with the response corrections) roughly every era ($\approx 20 \fbinv$).
 
@@ -72,16 +69,10 @@ The effects of radiation damage are dependent on the delivered luminosity. The d
 
 In the case of downtime of the laser system (also seen in Figure \ref{fig:ECAL-Laser_data} for 2024), the backup approach are dedicated energy flow extrapolations, which are non-trivial. Therefore, the preference is to use laser data.
 
-% NGT candidate assessment
-In the context of a potential candidate for the optimal NGT calibrations, the gains or \texttt{RadDam} corrections are important for HLT reconstruction and require frequent updates. There are plans to include them in the HCAL automation system (covered in more details the next Section \ref{sec:HCAL_pedestals}) within weekly updates. Therefore, they are a good candidate for the NGT workflow. One caveat is that they are dependent on laser data, which requires a different data stream than the standard bulk collisions data. Furthermore, a vital requirement is a well-functioning laser system.
-
 \subsubsection{Pedestals}\label{sec:HCAL_pedestals}
 The HCAL pedestals (\texttt{HcalPedestals}) and their corresponding widths (\texttt{HcalPedestalWidths}) are essentially measurements of the noise "floor" that are offset to avoid any energy measurement bias. Some sources of noise include dark and leakage currents, or particles interacting with the readout electronics. Generally, it increases with radiation damage. Regular pedestal updates are important to avoid any drifting of HCAL-driven trigger rates and contributions to the fraction of the energy deposited in the HCAL and ECAL, $\frac{H}{E}$, which is an observable used in the identification of electrons and photons, including shower shapes and isolation. The pedestals are also important inputs into other calibrations, such as the response corrections.
 
 Generally, they are updated roughly every week ($\approx 2 \fbinv$), as part of the HCAL automation workflow (discussed in Section \ref{sec:CMScalibration}). Effective pedestals are calculated from collision runs, where good input data from candidate runs is identified and processed within 1 hour after a given LHC fill. The input data is based on measurements in orbit/abort gap when there is no beam in the LHC (similarly to the laser data for the HCAL gains discussed in the previous Section \ref{sec:HCAL_gains}). The conditions are then automatically uploaded to the conditions database via the O2O procedure. Validation in the context of changes to L1T and HLT trigger rates are produced within 2 hours, with an ultimate validation and green-light from AlCa typically after 1-2 days. Given a successful validation, this is followed by deployment at the subsequent LHC interfill period.
-
-% NGT candidate assessment
-In the context of a potential candidate for the optimal NGT calibrations, the pedestals are critical inputs. They are included in the HCAL automation system within weekly updates, which automatically make them a good candidate for the NGT workflow. One caveat is that they are dependent on orbit/abort gap data, which requires a different data stream than the standard bulk collisions data.
 
 \subsubsection{Others}
 
@@ -95,6 +86,17 @@ There are several other critical conditions listed in Table \ref{tab:HCALCalibra
 \end{itemize}
 
 One important thing to note is that there exist fundamental HCAL conditions or calibrations which can have a significant effect on HLT reconstruction that are implemented in the hardware directly,  while their conditions database records may not be considered critical per se (but rather used for bookkeeping purposes); Examples include the aforementioned zero-suppression thresholds, \texttt{HcalZSThresholds}) or the timing alignment.
+
+\subsubsection{Recommendations}
+
+In the context of a potential candidates for the optimal NGT calibrations:
+\begin{itemize}
+    \item The response corrections involve a number of dedicated separate offline analyses for different HCAL subsystems, using various input datasets (incl. \texttt{AlCaRecos}) and specific selections. Thus, their determination is rather convoluted and they are tricky to do without proper offline analysis and corresponding validation. Even though some of the sub-calibrations might be reasonably possible to automate (e.g. $Z \rightarrow ee$ for HF), it would still require a significant amount of work, especially in the context of proper validation. Furthermore, since they are incorporated into the LUTs, they are entangled together with L1T condition updates. Therefore, one can conclude that the response corrections are not a viable candidate for the NGT workflow in their current form, especially for the Run 3 prototype.
+    \item The gains or \texttt{RadDam} corrections are important for HLT reconstruction and require frequent updates. There are plans to include them in the HCAL automation system (covered in more details the next Section \ref{sec:HCAL_pedestals}) within weekly updates. Therefore, they are a good candidate for the NGT workflow. One caveat is that they are dependent on laser data, which requires a different data stream than the standard bulk collisions data. Furthermore, a vital requirement is a well-functioning laser system.
+    \item The pedestals are critical inputs. They are included in the HCAL automation system within weekly updates, which automatically make them a good candidate for the NGT workflow. One caveat is that they are dependent on orbit/abort gap data, which requires a different data stream than the standard bulk collisions data.
+\end{itemize}
+
+Therefore, the recommendation is to consider the inclusion of the gains (\texttt{RadDam}) and pedestals in the NGT demonstrator workflow, with the caveat that they require laser data as input. Response corrections are not a viable candidate for the demonstrator in their current format, however, elements could potentially be considered for the future in the context of the \Phasetwo upgrade, under the assumption significant work is invested in its automation and validation. The remaining conditions are not considered viable candidates.
 
 % NOTE: The conditions for Look-Up Tables (LUTs) are: \texttt{Pedestals}, \texttt{Gains}, \texttt{RespCorrs}, \texttt{ChannelQuality}, \texttt{ElectronicsMap}, \texttt{QIEData}, \texttt{SiPMCharacteristics}, \texttt{LUTMetadata}, \texttt{LUTCorrs}
 

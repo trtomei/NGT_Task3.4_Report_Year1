@@ -1,6 +1,6 @@
 \subsection{Pixel Tracker Calibrations}
 
-The CMS Silicon Pixel detector is integral to the High-Level Trigger (HLT) decision-making process, as it provides information for the seeding of the charged particle tracking algorithm, as well as crucial information for the determination of the primary and secondary interaction vertices \cite{Dominguez:1481838,Adam_2021}.\\
+The CMS Silicon Pixel detector is integral to the High-Level Trigger (HLT) decision-making process, as it provides information for the seeding of the charged particle tracking algorithm, as well as crucial information for the determination of the primary and secondary interaction vertices parameters \cite{Dominguez:1481838,Adam_2021}.\\
 This part of the report delves into the calibration prospects of the SiPixel detector, emphasising unused records, Front End Drive (FED) cabling, gain and quality calibrations, Cluster Position Estimator (CPE) conditions, and alignment practices.\\
 Future prospects and recommendations for improving calibration workflows under the NGT framework are also discussed.\newline \newline 
 Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tracker, of which 12 are relevant to Run 3 data-taking. From these, the following 8 are considered core and critical for data-taking:
@@ -30,7 +30,7 @@ Out of the 326 conditions in the HLT GT, 13 are related to the Silicon Pixel Tra
 \end{table}
 
 \subsubsection{Unused Records in SiPixel Calibration}
-Several records remain unused at HLT but hold relevance for other operational aspects:
+Several records present in the HLT Global Tag remain unused at HLT but hold relevance for other operational aspects, such as online Data Quality Monitoring (DQM):
 \begin{itemize}
     \item \texttt{SiPixelDetVOffRcd}: Lists detector IDs with HV or LV off. Payload is ideal or empty.
     \item \texttt{SiPixelGainCalibrationOfflineRcd}: Stores gain and pedestal values for offline analysis.
@@ -43,7 +43,7 @@ The \texttt{SiPixelFedCablingMapRcd} records cabling maps connecting FEDs to rea
 
 \subsubsection{Bad components}
 Description: This payload contains the module identification numbers (\texttt{DetId}) and readout chips (ROC)s numbers associated with those \texttt{DetID}s that are considered "dead." It is used by the track reconstruction algorithm.\\
-Record Name: \texttt{SiPixelQualityRcd} 
+The \texttt{SiPixelQualityRcd} 
 
 \subsubsection{Pixel hit position reconstruction}
 
