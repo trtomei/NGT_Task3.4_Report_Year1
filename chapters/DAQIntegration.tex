@@ -2,11 +2,11 @@
 \chapter{NGT--DAQ Integration} \label{sec:NGT-DAQintegration}
 % Thiago 
 
-The \emph{Optimal Calibrations} system has to be embedded in the CMS trigger and data acquisition (DAQ) system,
+The \emph{Optimal Calibrations} system will be embedded in the CMS DAQ system,
 both in the demonstrator system and in the \Phasetwo implementation. We briefly review the DAQ system architecture implemented for \Runthree, compare it to the baseline DAQ architecture proposed for \Phasetwo, and go through a preliminary calculation of the NGT system feasibility. We finally discuss the options for a demonstrator, including a minimal implementation and how it can be integrated in the \Runthree system.
 
-\section{Demonstrator Integration in Run 3}
-The CMS DAQ system for Run 3 (DAQ3) is an intricate system, dealing with all steps of the data flow from the sub-detector front-end drivers (FEDs) through the final delivery of data streams to Tier-0. For the purposes of our discussions, we can focus on the following elements of Figure~\ref{fig:DAQ3}: 
+\section{Demonstrator Integration in \Runthree}
+The CMS DAQ system for \Runthree (DAQ3) is an intricate system, dealing with all steps of the data flow from the sub-detector front-end drivers (FEDs) through the final delivery of data streams to Tier-0. For the purposes of our discussions, we can focus on the following elements of Figure~\ref{fig:DAQ3}: 
 \begin{itemize}
     \item The \emph{Readout Units} (RUs) unpack and merge event fragments into super-fragments.
     \item These are then sent to the \emph{Builder Units} (BUs) to be further assembled into complete events.
@@ -29,7 +29,7 @@ i) it is \emph{pipelined}, so the data should follow an unidirectional flow;
 ii) it is \emph{democratic}, in the sense that all elements (RUs, BUs, FUs) are treated equally.
 
 \section{Baseline DAQ Architecture for \Phasetwo}\label{sec:DAQP2}
-The baseline architecture for  the \Phasetwo DAQ system is shown in Figure~\ref{fig:DAQP2}. A comparison with Fig.~\ref{fig:DAQ3} shows that it is a direct evolution of the \Runtwo system, upgraded to be withstand the larger data flows of the HL-LHC era. In its current proposal, this involves maintaining a folded infrastructure where the data flow is bi-directional with single physical \texttt{RU/BU} nodes. The choice choice of \texttt{RU/BU} server architecture and form factor mostly dependent on aggregate memory bandwidth. Other options are also on the table, such as potentially running BU software on the FU (\texttt{BU/FU}), in a similar approach to that of the \texttt{RU/BU}. The final choice of the infrastructure is dependent on the requirements of the NGT calibration workflow, especially where the data would be buffered, which is discussed in more detail in Section \ref{sec:DAQbuffer}. This makes the necessity of a demonstrator system even more pressing.
+The baseline architecture for  the \Phasetwo DAQ system is shown in Figure~\ref{fig:DAQP2}. A comparison with Fig.~\ref{fig:DAQ3} shows that it is a direct evolution of the \Runthree system, upgraded to be withstand the larger data flows of the HL-LHC era. In its current proposal, this involves maintaining a folded infrastructure where the data flow is bi-directional with single physical \texttt{RU/BU} nodes. The choice choice of \texttt{RU/BU} server architecture and form factor mostly dependent on aggregate memory bandwidth. Other options are also on the table, such as potentially running BU software on the FU (\texttt{BU/FU}), in a similar approach to that of the \texttt{RU/BU}. The final choice of the infrastructure is dependent on the requirements of the NGT calibration workflow, especially where the data would be buffered, which is discussed in more detail in Section \ref{sec:DAQbuffer}. This makes the necessity of a demonstrator system even more pressing.
 
 \begin{figure}[htbp]
    \centering
@@ -51,9 +51,10 @@ where $R$ is the input rate to the buffer,
 $\tau$ is the period during which we have to buffer the data,
 $E$ is the event size and
 $s$ is a safety factor.
-For a first calculation, we take the Run 4 estimates from the DAQ-HLT TDR:
+For a first calculation, we take the \Runfour estimates from the DAQ-HLT TDR~\cite{Collaboration:2759072}:
 $R = A^\text{L1}$ = 500\kHz, $E$ = 6.1\MB,
-and assume a flat 50\% safety factor ($s$ = 1.5).
+and assume a flat 50\% safety factor ($s$ = 1.5),
+\textit{e.g.\@} to address unforeseen inefficiencies, such as read/write speeds lower than expected.
 The discussion on the magnitude of the buffer period $\tau$ is more subtle and will be done in the next section.
 
 \subsection{Buffer}\label{sec:DAQbuffer}
@@ -64,7 +65,6 @@ The size of the buffer and, correspondingly, the amount of time during which the
 \begin{itemize}
 \item The buffer period has to be longer than the amount of time needed to derive the calibrations.
 A relevant timescale is the PCL completion time, which we know from experience to take close to eight hours.
-We know from experience that the PCL takes, in average, 8 hours to run for completion.
 Some of the longest runs, however, may need additional time; a long run from LHC fill 10200 took data during more than 13 hours
 (delivering close to $900\pbinv$), and
 the PCL took more than 10 hours to finish,
@@ -86,8 +86,8 @@ but that calculation has to take into account the LHC duty cycle, so we use the 
 \begin{itemize}
 \item The High-Luminosity LHC will work in a $\sim70\%$ duty cycle, meaning that in a 24-hour period there will be 17 hours of stable beams and 7 hours of interfill (including injection and ramp).
 \item Levelling will once again be used to keep the effective luminosity at a given level.
-Following the Run 3 historic performance, we assume that the 17 hours of stable beams will be divided into 10 hours of levelling and 7 hours of luminosity decay phase.
-\item Again following the Run 3 performance, we assume that the luminosity (as well as the pileup) in the decay phase will average out to $\sim80\%$ of levelled luminosity.
+Following the \Runthree historic performance, we assume that the 17 hours of stable beams will be divided into 10 hours of levelling and 7 hours of luminosity decay phase.
+\item Again following the \Runthree performance, we assume that the luminosity (as well as the pileup) in the decay phase will average out to $\sim80\%$ of levelled luminosity.
 \item We assume that the event size $E$ scales linearly with pileup.
 \item We assume that the Level-1 accept rate $A^{\text{L1}}$ will be kept constant even during the decay phase. 
 \item The 7 hours of downtime are effectively free from the point of view of data buffering for NGT.
@@ -120,24 +120,25 @@ Noting that the two results agree within $\sim25\%$, and that many more assumpti
 
 We can compare the proposed NGT buffer size to a number of similar systems. 
 
-One important thing to note is that we are already performing data-buffering in CMS at the DAQ level and beyond. The current storage capacity of the CMS Run 3 cluster file system (Lustre) is 1.2\,PB. Local buffering is also performed on SSDs mounted on the cluster SM nodes (200 TB total) primarily used for HI running in 2024, providing extra DAQ storage throughput up to 32 GB/s. There also exists a local memory buffer \texttt{ramdisk} (200 GB) on the RU/BUs, from which the HLT FUs receive data from, buffering during the loading of calibrations data, and fluctuations in HLT event processing time; the first merging of streamer files from the HLT output also happens on the \texttt{ramdisk}. \textcolor{red}{The the CMS Tier-0 holds a disk buffer of 11\,PB for incoming raw data from Point 5 to be held on for prompt reconstruction,
-as well as a disk buffer of $25\PB$ for reconstructed data before it is transferred to other sites in the WLCG.}
+One important thing to note is that we are already performing data-buffering in CMS at the DAQ level and beyond. The current storage capacity of the CMS \Runthree cluster file system (Lustre) is 1.2\,PB. Local buffering is also performed on SSDs mounted on the cluster SM nodes (200 TB total) primarily used for HI running in 2024, providing extra DAQ storage throughput up to 32 GB/s. There also exists a local memory buffer \texttt{ramdisk} (200 GB) on the RU/BUs, from which the HLT FUs receive data from, buffering during the loading of calibrations data, and fluctuations in HLT event processing time; the first merging of streamer files from the HLT output also happens on the \texttt{ramdisk}. The CMS Tier-0 holds a disk buffer of $45\PB$ both 
+for incoming raw data from the experiment site to be held on for prompt reconstruction, and
+for reconstructed data before it is transferred to other sites in the WLCG.
 
-The LHCb experiment implemented a similar dataflow in their DAQ system, with events accepted by their HLT1 system held in a 30\,PB buffer, used for real-time alignment and calibration, and finally passed on to their HLT2 system. We also note that experience from the LHCb system shows that the reading/writing speed of the disks decreases when they fill up, which justifies the consideration of a large safety factor ($s = 1.5$).
+The LHCb experiment implemented a similar dataflow in their DAQ system, with events accepted by their HLT1 system held in a 30\,PB buffer, used for real-time alignment and calibration, and finally passed on to their HLT2 system~\cite{LHCb:2023hlw}. We also note that experience from the LHCb system shows that the reading/writing speed of the disks decreases when they fill up, which justifies the consideration of a large safety factor ($s = 1.5$).
 
 % Buffer hardware
-Concerning the hardware solutions for the buffer, generally there exists a cost versus benefit trade-off between systems based on Hard Disk Drives (HDDs) versus Solid State Device (SSDs). In the case of HDD, the number of disks is driven by the overall bandwidth required. The critical parameters of an SSD based system are the total storage size and the endurance (how many disk writes; usually 1-3 full disk writes per day). The performance of writing to disk is also an important consideration, where the SSDs are significantly more performant ($\mathcal{O}(10 GB/s)$). We can select SSDs as a baseline choice for our preliminary estimations, especially given their higher performance. However a dedicated performance versus price evolution study still needs to be performed.
+Concerning the hardware solutions for the buffer, generally there exists a cost versus benefit trade-off between systems based on Hard Disk Drives (HDDs) versus Solid State Device (SSDs). In the case of HDD, the number of disks is driven by the overall bandwidth required. The critical parameters of an SSD based system are the total storage size and the endurance (how many disk writes; usually 1-3 full disk writes per day). The performance of writing to disk is also an important consideration, where the SSDs are significantly more performant ($\mathcal{O}(10)\GBpers$). We can select SSDs as a baseline choice for our preliminary estimations, especially given their higher performance. However a dedicated performance versus price evolution study still needs to be performed.
 
 Finally, we note that the physical location of the buffer is yet to be defined. There are three possibilities: 
 locally attached to a BU (or \texttt{RU/BU}), to a FU (or \texttt{BU/FU}), or as a separated central storage. A separate central storage is disfavoured, due to the performance issues of the Lustre cluster system in 2024. Following, the potential data-loss in case of failure is different whether one buffers built (attached to FU) or unbuilt (attached to a BU) data. In its current configuration the data-loss is greater for buffering unbuilt (BU) data. On the other hand, despite lower potential data loss, the volatility of FUs need to be considered for buffering built data. Ultimately, robustness is a vital consideration in the final decision-making process.
 
 For a preliminary estimation, we assume the ``buffer attached to FU'' scenario.
-According to the DAQ-HLT TDR,
+According to the DAQ-HLT TDR~\cite{Collaboration:2759072},
 1600 (840) rack-mount 1U (2U) servers would comprise the HLT farm for \Runfour (\Runfive).
 If it were feasible to use the latter configuration for \Runfour as well,
 the problem would be how to divide 200 PB in 840 2U servers.
-That comes down to  $240\TB$ per server; $60\TB$ disks have recently become available today~\cite{micron60tb},
-and there is a high probability that $120\TB$ disks will be available for \Runfour. So this scenario can be realised by installing two extra disks in each server of the HLT farm.
+That comes down to  $240\TB$ per server; $60\TB$ disks have recently become available~\cite{micron60tb},
+and there is a high probability that $120\TB$ disks (or larger) will be available for \Runfour. So this scenario can be realised by installing two extra disks in each server of the HLT farm.
 
 \subsection{Nodes for the Optimal Calibration}
 The computer nodes for the optimal calibration (henceforth ``calibration nodes'') have to be integrated in the DAQ system.
@@ -145,14 +146,16 @@ The alignment and calibration algorithms need built events to run over, so these
 It is easiest to locate these nodes downstream of the FUs as well --
 in this way, the FUs can naturally transmit the necessary data streams to the calibration nodes, 
 just as they do for the offline calibrations.
+We underline that are separate computer nodes from both from those that are already envisioned in the \Phasetwo DAQ system and from those that will be part of the data buffer.
+We are aware that this additional required CPU power comes at an additional cost.
 
-\subsection{Additional Output to the Storage and Transfer System}
-The additional bandwidth needed to sustain the output data stream of the NGT workflow also imposes requirements on the Phase-2 DAQ system.
+\subsection{Additional DAQ Output}
+The additional bandwidth needed to sustain the output data stream of the NGT workflow also imposes requirements on the \Phasetwo DAQ system.
 Assuming we will save all the L1T-accepted events in a reduced data format comparable to the current Scouting format~\cite{CMS:2024zhe},
 %%% Thiago: should we somehow talk about Task 3.3 here?
 this will lead to an additional output of $500\kHz 
 \times 25\,\text{kB}$ = $12.5\GBpers$.
-This is comparable in magnitude, albeit smaller, to the 51\,GB/s quoted for the storage throughput in the DAQ-HLT TDR.
+This is comparable in magnitude, albeit smaller, to the 51\,GB/s quoted for the storage throughput in the DAQ-HLT TDR~\cite{Collaboration:2759072}.
 
 \section{Minimum Minimorum NGT Demonstrator}
 In the context of a NGT demonstrator for \Runthree, there are three hardware options that are considered:
@@ -166,7 +169,7 @@ In the context of a NGT demonstrator for \Runthree, there are three hardware opt
 \end{itemize}
 where \texttt{SSD} refers to the buffer medium.
 
-The prototype choice should preferably be as close as possible to the Phase 2 DAQ infrastructure (discussed above in Section \ref{sec:DAQP2}), which is also dependent on the requirements of the NGT calibration workflow. However, for demonstration purposes of the full workflow, this is not strictly a requirement and one should consider the trade-off with simplicity in integrating it within the current \texttt{DAQ3} system. On thing to note is that whether to buffer built or unbuilt data is a secondary consideration, as with a single buffering node the data-loss is equivalent. Ultimately, one could consider more than one of the prototype options.
+The prototype choice should preferably be as close as possible to the \Phasetwo DAQ architecture (discussed above in Section \ref{sec:DAQP2}), which is also dependent on the requirements of the NGT calibration workflow. However, for demonstration purposes of the full workflow, this is not strictly a requirement and one should consider the trade-off with simplicity in integrating it within the current DAQ3 system. On thing to note is that whether to buffer built or unbuilt data is a secondary consideration, as with a single buffering node the data-loss is equivalent. Ultimately, one could consider more than one of the prototype options.
 
 In view of the discussion above, a minimal NGT demonstrator would take the following form:
 \begin{itemize}
@@ -181,7 +184,7 @@ from $\sim 30\kHz$
 to $\sim 300\kHz$.
 \item \textbf{We buffer the resulting data set for 48 hours.}
 For the demonstrator we take the absolute worst case scenario of the alignment and calibration algorithms taking the same time to run as those in the PCL.
-In terms of the Run 3 DAQ system, this machine would simply be configured as another stream destination.
+In terms of the \Runthree DAQ system, this machine would simply be configured as another stream destination.
 \item \textbf{A copy of the data streams needed for the candidate calibrations is added to the HLT menu.}
 For the candidate calibrations, we estimate that 
 %%% Thiago: to be cross-checked
@@ -194,13 +197,14 @@ $\tau$ = 48 h,
 $E = 1.2\MB$ and
 $s$ = 1.5
 would entail a buffer of $\sim 200\TB$.
-A regular HLT-class node with four $60\TB$ disks should be able to hold the data easily.
-\item \textbf{We use the regular workflows to derive the candidate calibrations.}
+A regular HLT-class node with four $60\TB$ (or two $120\TB$) disks should be able to hold the data easily.
+\item \textbf{We use a copy of the regular workflows to derive the candidate calibrations.}
 Another machine, similar to the first, accesses the demonstrator data buffer
 and
 runs the alignment and calibration algorithms.
-\item \textbf{Re-run the Scouting paths on the buffered data with the updated calibrations.}
-The framework for rerunning the HLT with an alternate set of calibration has already been discussed in Section~\ref{sec:}.
+\item \textbf{Re-run the Scouting paths on the buffered data with the updated calibrations,}
+after the latter are validated.
+The framework for rerunning the HLT with an alternate set of calibrations is in development and results will be presented in the next report.
 \item \textbf{Compare the performance of the original vs re-run Scouting.}
 This should demonstrate the effect of the updated calibrations. 
 \end{itemize}

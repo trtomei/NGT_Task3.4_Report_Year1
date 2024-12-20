@@ -1,6 +1,6 @@
 \subsection{Strip Tracker Calibrations}
 
-The silicon strip tracker (SST) of the CMS experiment is the largest detector of its kind in the world, with an active area of 200 $m^{2}$ of silicon \cite{Karimaki:368412,CERN-LHCC-2000-016,Adam_2021}.\\
+The silicon strip tracker (SST) of the CMS experiment is the largest detector of its kind in the world, with an active area of 200 $m^{2}$ of silicon \cite{Karimaki:368412,CMS:2000eqx,CMSTrackerGroup:2020edz}.\\
 The SST detects charge deposits (hits) at discrete points along the paths of charged particles arising from the collisions produced by the LHC. These hits, together with those detected in the CMS pixel detector (described in Section \ref{sec:PixelCalib}), are used to reconstruct the trajectories of charged particles traversing the detector, thus the SiStrip detector plays a critical role in the High-Level Trigger (HLT) decision-making process.\\
 The calibration of its parameters, particularly for tracking and reconstruction, is vital for maintaining performance and ensuring robust data acquisition. This section summarizes the key prospects and current practices for optimizing SiStrip calibrations at HLT.\newline \newline
 This part of the report delves into the calibration prospects of the SiStrip detector.\\
@@ -38,7 +38,7 @@ Out of the 326 conditions in the HLT GT, 24 are related to the Silicon Strip Tra
 
 \subsubsection{Hit Reconstruction in the Strip Detector}
 
-The data acquisition system (DAQ) of the strip detector processes signals through algorithms executed on off-detector electronics, specifically on the front-end driver (FED) modules \cite{Tracking_2014}. These algorithms:
+The data acquisition system (DAQ) of the strip detector processes signals through algorithms executed on off-detector electronics, specifically on the front-end driver (FED) modules~\cite{CMS:2014pgm}. These algorithms:
 \begin{itemize}
     \item Subtract pedestals (baseline signal levels without particles).
     \item Remove common mode noise (event-by-event baseline fluctuations within each tracker chip).
@@ -191,6 +191,6 @@ To summarise the main NGT calibration workflow candidates:
 
 The recommendations in the context of the NGT calibration workflow are:
 \begin{itemize}
-    \item Prioritise the inclusion of bad components masking in the NGT demonstrator workflow due to its operational simplicity and demonstrated impact.
+    \item Prioritize the inclusion of bad components masking in the NGT demonstrator workflow due to its operational simplicity and demonstrated impact.
     \item Consider periodic evaluations for integrating gain calibrations as part of long-term upgrades.
 \end{itemize}

@@ -1,20 +1,29 @@
+%!TEX root = ../main.tex
 \chapter{Optimal Calibrations} \label{sec:OpCa_HLT}
 \section{General}
 
 %% General
-% From NGT Proposal: 
-The general goal of this task is to optimise the calibration procedures for the online HLT data-taking of the CMS detector. Task 3.4 involves leveraging advanced computing techniques, including AI-driven predictive models, while enhancing traditional CMS calibration methods. \\
-Such an improvement is essential to push real-time analysis based on $\mathrm{R}^3$ software (Task 3.1) to the same accuracy that we typically achieve offline. One could then store high-quality high-level information, which implies a big save in terms of storage.\\
-\newline
-A conceptual design of the ultimate setup foreseen in the context of the $\mathrm{R}^3$  project is shown in  Fig.~\ref{fig:NGT-HLT_CalibrationWorkflow}. \\
-The input rate of \SI{40}{\mega\hertz} LHC collisions will be processed by the hardware Level 1 trigger system (L1T), whose output is foreseen to be \SI{500}{\kilo\hertz} during Run-\num{4} and \SI{750}{\kilo\hertz} during Run-\num{5} data taking. \\
-\newline
-In order to ensure an \emph{Offline-like} quality of the reconstruction to enable some "quick and dirty" analyses using the reconstructed objects by the HLT, without requiring additional steps, a dedicated real-time calibration system will need to process the entirety of the L1T accept stream.\\  
-A buffer composed of SSDs will temporarily store events from the data acquisition system after L1T event filtering, with a retention period of approximately 8 to 12 hours. This buffer ensures that events remain available until optimal calibrations can be derived for the entire dataset (for an actual discussion of the architectural layout of this system refer to Section \ref{sec:DAQIntegration}.)\\
-\newline
-Immediately after data-taking, a small fraction (a few percent) of the buffered data, selected via light filtering of the L1T bits, will be processed by an accelerated calibration workflow. This workflow focuses on deriving the most critical conditions required for the online event selection at the HLT.\\
-Once these conditions are stored and all necessary calibrations are completed, the HLT processing of the buffered data will commence, ensuring optimal calibration and event reconstruction. \\
-The $\mathrm{R}^3$ project foresees the HLT farm output rate in Run-\num{5} to be around \SI{10}{\kilo\hertz} of standard RAW data. RAW data refers to the minimally processed, detector-level information recorded during collisions, including raw hits, energies, and other measurements from the various detector subsystems. This data serves as the starting point for all higher-level offline reconstruction and analysis steps, allowing in principle multiple reconstruction passes with updated reconstruction software and calibrations.\\ Meanwhile, the entire set of events passing the Level-1 Trigger (L1T) Accept will be saved in \texttt{NanoAOD} format. \texttt{NanoAOD} is a highly compact, flat ntuple format designed to store reconstructed physics objects (such as tracks, leptons, and jets) and their properties, as determined by the High-Level Trigger (HLT). This format enables efficient storage and rapid analysis by including only the essential physics information for downstream studies.
+% From NGT Proposal:
+The general goal of this task is to optimise the calibration procedures for the online HLT data-taking of the CMS detector. 
+Task 3.4 involves leveraging advanced computing techniques, including AI-driven predictive models, while enhancing traditional CMS calibration methods.
+Such an improvement is essential to push real-time analysis based on \Rthree software (Task 3.1) to the same accuracy that we typically achieve offline. 
+One could then store high-quality high-level information, which implies a large reduction in terms of storage (Task 3.3).
+A conceptual design of the ultimate setup foreseen in the context of the \Rthree project is shown in  Fig.~\ref{fig:NGT-HLT_CalibrationWorkflow}.
+The input rate of \SI{40}{\mega\hertz} LHC collisions will be processed by the hardware L1T, whose output is foreseen to be \SI{500}{\kilo\hertz} during \Runfour and \SI{750}{\kilo\hertz} during \Runfive data taking.
+
+In order to ensure an \emph{offline-like} quality of the reconstruction to enable physics analyses using the reconstructed objects by the HLT, without requiring additional steps, a dedicated real-time calibration system will need to process the entirety of the L1T accept stream.
+A buffer composed of solid state devices (SSDs) will temporarily store events from the data acquisition system after L1T event filtering, with a retention period of approximately 8 to 12 hours. 
+This buffer ensures that events remain available until optimal calibrations can be derived for the entire dataset (for an actual discussion of the architectural layout of this system refer to Section~\ref{sec:NGT-DAQintegration}).
+
+Immediately after data-taking, a small fraction (a few percent) of the buffered data, selected via light filtering of the L1T bits, will be processed by an accelerated calibration workflow. 
+This workflow focuses on deriving the most critical conditions required for the online event selection at the HLT.
+Once these conditions are stored and all necessary calibrations are completed, the HLT processing of the buffered data will commence, ensuring optimal calibration and event reconstruction.
+The \Rthree project foresees the HLT farm output rate in \Runfive to be around \SI{10}{\kilo\hertz} of standard RAW data. 
+RAW data refers to the minimally processed, detector-level information recorded during collisions, including raw hits, energies, and other measurements from the various detector subsystems. 
+These data serve as the starting point for all higher-level offline reconstruction and analysis steps, allowing in principle multiple reconstruction passes with updated reconstruction software and calibrations. 
+Meanwhile, the entire set of events passing the L1T accept will be saved in \texttt{NanoAOD} format.
+\texttt{NanoAOD} is a highly compact, flat ntuple format designed to store reconstructed physics objects (such as tracks, leptons, and jets) and their properties, as determined by the HLT. 
+This format enables efficient storage and rapid analysis by including only the essential physics information for downstream studies.
 
 % Deliverable/milestone: Production of a report illustrating the current calibration workflows in CMS and evaluating the impact of non-optimal calibrations on the physics performance of the online reconstruction.
 
@@ -22,13 +31,14 @@ The $\mathrm{R}^3$ project foresees the HLT farm output rate in Run-\num{5} to b
 \centering
 %\includegraphics[width=\textwidth]{figures/NGT-HLT_Calibration_Workflow.pdf} %\hfill
 \includegraphics[width=\textwidth]{figures/NGT_Calibration_Workflow_updated.pdf}
-\caption{Conceptual Design of $\mathrm{R}^{3}$ Optimal Calibrations (NGT-HLT Calibration Workflow)}
+\caption{Conceptual Design of \Rthree Optimal Calibrations (NGT-HLT Calibration Workflow).}
 \label{fig:NGT-HLT_CalibrationWorkflow}
 \end{figure}
 
 \section{Calibration Workflows Analysis}
-In this section we conduct a comprehensive analysis of the current calibration workflows and procedures within CMS currently in place, highlighting the intricacies of the process, and identifying areas for improvement (bottlenecks) in the calibration process. 
-The current preliminary survey focused on finding viable candidates for the prototype. A continued and more detailed follow-up survey is being planned, especially in the context of Phase 2 calibrations, including new detectors (MTD, HGCAL, new tracker, etc.)
+In this section we conduct a comprehensive analysis of the current calibration workflows and procedures within CMS currently in place, highlighting the intricacies of the process, and identifying areas for improvement (bottlenecks) in the calibration process.
+The current preliminary survey focused on finding viable candidates for the prototype. 
+A continued and more detailed follow-up survey is being planned, especially in the context of \Phasetwo calibrations, including new detectors (MTD, HGCAL, new silicon tracker, etc.)
 
 %\include{chapters/Calibrations_General}
 \include{chapters/Calibrations_BeamSpot} % Marco / Thiago
@@ -40,6 +50,6 @@ The current preliminary survey focused on finding viable candidates for the prot
 
 %\section{Physics Performance} % sadly this needs to be skipped.
 
-%%% Here we discuss the 
+%%% Here we discuss the
 %% Physics performance
 % Assessment on the impact of non-optimal calibrations on the physics performance of the online reconstruction, by analysing data to quantify the effects of calibration inaccuracies.
