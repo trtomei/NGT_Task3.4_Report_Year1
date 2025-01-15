@@ -11,7 +11,18 @@
 %style=numeric,
 %sorting=ynt
 %]{biblatex}
-\usepackage{hyperref}                % For clickable hyperlinks
+%\usepackage{hyperref}                % For clickable hyperlinks
+\usepackage{hyperref}   % For clickable hyperlinks
+% Set hyperlink colors
+\definecolor{colorurl}{HTML}{204a87}
+\definecolor{colorlink}{HTML}{cc0000}
+\definecolor{colorcite}{HTML}{204a87}
+\hypersetup{
+    colorlinks=true,          % Enable colored links
+    urlcolor=colorurl,        % Set color for URL links
+    linkcolor=colorlink,      % Set color for internal links
+    citecolor=colorcite,      % Set color for internal bibliography links
+}
 \usepackage{siunitx}
 \usepackage{href-ul}
 \usepackage{tcolorbox}
